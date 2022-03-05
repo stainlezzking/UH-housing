@@ -65,24 +65,6 @@
             </div>
           </nav>
     </div>
-    <!-- banner section -->
-    <div class="banner position-relative">
-        <picture >
-            <source media="(max-width:700px )" srcset="../static/images/banner_couch.png" alt="">
-                <source media="(min-width:700px )" srcset="../static/images/banner_couch_big.png" alt="">
-            <img src="../static/images/banner_couch_big.png" class="w-100" alt="banner picture of a cozy coach for the UH unizik housing" srcset="">
-        </picture>
-        <div class="banner_caption position-absolute">
-           <p>Let's</p> 
-           <p>Find Your</p> 
-           <p>Perfect Home</p>
-        </div>
-        <div class="button_cover position-absolute">
-          <button type="button" class="btn btn-primary ">Find Room</button>
-          <button type="button" class="btn btn-info text-white ">Find Roomate</button>
-        </div>
-    </div>
-
 <!-- advert section -->
 <section class="advert py-2">
     <div class="advert_post ">
@@ -215,6 +197,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary">Filter 
+            <!-- make filter button shine green when it is in action -->
             <i class="fa-regular fa-bars-filter"></i>
           </button>
         </div>
@@ -227,7 +210,8 @@
 
 <!-- ROOMS SECTION -->
 <section class="rooms_group container-fluid my-3">
-  <h3 class="text-center p-5 fw-bold"> Recent Spaces</h3>
+  <h3 class="text-center p-5 fw-bold"> Rooms </h3>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="https://google.com">

@@ -157,10 +157,9 @@
 
 }
 
-.banner> button {
-    bottom: 8vw;
-    right: 15vw;
-    background-color: var(--bg_color) ;
+.banner .button_cover {
+    bottom: 6vw;
+    right: 2vw;
 }
 .advert{
     background-color: var(--bg_color);
@@ -187,9 +186,12 @@
 }
 
 @media screen and (min-width:700px){
+  .banner .button_cover{
+      right: 8vw;
+   }
    .banner button{
-    padding: .5rem 1rem;
     font-size: 1.25rem;
+    padding: .5rem 1rem;
     border-radius: .3rem;
    }
 }
