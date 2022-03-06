@@ -1,0 +1,79 @@
+<style>
+    /* footer section */
+footer{
+    background-color: var(--bg_color);
+    color: white;
+}
+
+footer ul:nth-child(1)::before{
+    content: " ";
+    display: block;
+    width: 10px;
+    height: 218px;
+    position: absolute;
+    background-color: black;
+    top: 0;
+    top:  .7rem;
+    left: 10px;
+}
+footer ul:nth-child(2)::after{
+    content: " ";
+    display: block;
+    width: 10px;
+    height: 218px;
+    position: absolute;
+    background-color: black;
+    top: 0;
+    top: calc(218px + 3rem);
+    right: 10px;
+}
+footer ul li.list-group-item {
+    background-color: transparent;
+    color: white;
+}
+@media screen and (min-width:700px){
+    footer ul:nth-child(2){
+       margin-left: auto;
+       text-align: right;
+    }  
+}
+
+</style>
+<footer class="pt-4  "> 
+    <div class="container-md position-relative px-5">
+        <ul class="list-group list-group-flush mb-5">
+            <li class="list-group-item h3">CONTACT US</li>
+            <li class="list-group-item"> +234...</li>
+            <li class="list-group-item"> info@unizikhousing.com</li>
+            <li class="list-group-item"> 
+                <a href="#" class="text-decoration-none text-white">
+                    <i class="fa-brands fa-facebook"></i>
+                    facebook
+                </a>
+            </li>
+            <li class="list-group-item"> 
+                located in front of school gate
+            </li>
+        </ul>
+    
+        <ul class="list-group list-group-flush align-right ">
+            <li class="list-group-item h3">QUICK LINKS </li>
+           <li class="list-group-item">
+               <a href="#" class="text-decoration-none text-white"> HOME</a>
+           </li>
+           <li class="list-group-item">
+            <a href="#" class="text-decoration-none text-white">ABOUT</a>
+           </li>
+           <li class="list-group-item">
+            <a href="#" class="text-decoration-none text-white"> LOGIN</a>
+           </li>
+           <li class="list-group-item">
+            <a href="#" class="text-decoration-none text-white"> SIGNUP</a>
+           </li>
+        </ul>
+        <div class="mt-5">
+        <div class="text-center fw-bold text-dark h6"> &copy; ALL RIGHTS RESERVED </div>
+            <img src="../static/images/footer_image_small.png" class="img-fluid w-100" alt="" srcset="">
+        </div>
+    </div>
+</footer>

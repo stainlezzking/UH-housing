@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
- <link rel="shortcut icon" href="../static/images/logo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="static/images/logo.png" type="image/x-icon">
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/c8fd5239b9.js" crossorigin="anonymous"></script>
      <!-- google fonts -->
@@ -13,69 +13,17 @@
     <!-- ######## -->
         <!-- bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/boostrap_setter.css">
+    <link rel="stylesheet" href="static/css/boostrap_setter.css">
     <!-- ######### -->
 </head>
 <body>
-    <div class="container-lg p-0">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex" href="#">
-                    <img src="../static/images/logo.png" alt="logo of unizik housing" width="30" class="d-inline-block align-text-top me-1">
-                    <div class="name" >Unizik Housing</div>
-                  </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <div id="menu-toggle">
-                    <div id="hamburger">
-                      <span class="burgers"></span>
-                      <span class="burgers"></span>
-                      <span class="burgers"></span>
-                    </div>
-                    <div id="cross">
-                      <span class="burgers"></span>
-                      <span class="burgers"></span>
-                    </div>
-                  </div>
-              </button>
-              <div class="collapse navbar-collapse ms-auto" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Find Roomate</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Find Lodge </a>
-                  </li>
-                  <li class="nav-item">
-                    <!-- show this and the profile link when they are logged in -->
-                    <a class="nav-link" href="#">Upload Room</a>
-                  </li>
-                  <li class="nav-item">
-                    <!-- show this and the profile link when they are logged in -->
-                    <a class="nav-link" href="#">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Register </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">About Us </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-    </div>
+  <%- include('./partials/navbar.ejs') -%>
     <!-- banner section -->
     <div class="banner position-relative">
         <picture >
-            <source media="(max-width:700px )" srcset="../static/images/banner_couch.png" alt="">
-                <source media="(min-width:700px )" srcset="../static/images/banner_couch_big.png" alt="">
-            <img src="../static/images/banner_couch_big.png" class="w-100" alt="banner picture of a cozy coach for the UH unizik housing" srcset="">
+            <source media="(max-width:700px )" srcset="static/images/banner_couch.png" alt="">
+                <source media="(min-width:700px )" srcset="static/images/banner_couch_big.png" alt="">
+            <img src="static/images/banner_couch_big.png" class="w-100" alt="banner picture of a cozy coach for the UH unizik housing" srcset="">
         </picture>
         <div class="banner_caption position-absolute">
            <p>Let's</p> 
@@ -188,7 +136,7 @@
                         </article>
                         
                         <article class="feature4">
-                          <input type="checkbox" id="feature4" checked/>
+                          <input type="checkbox" id="feature4"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -199,7 +147,7 @@
                         </article>
 
                         <article class="feature5">
-                            <input type="checkbox" id="feature5" checked/>
+                            <input type="checkbox" id="feature5"/>
                             <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -236,7 +184,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="https://google.com">
-            <img src="../static/dont_upload/room1.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+            <img src="static/dont_upload/room1.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
             <div class="card-body">
               <h5 class="card-title d-flex justify-content-between align-items-baseline">
                   <small class="h4">SELF-CONTAIN</small>
@@ -248,7 +196,7 @@
         </div>
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="#">
-            <img src="../static/dont_upload/room2.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+            <img src="static/dont_upload/room2.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-between align-items-baseline">
                     <small class="h4">2-BED FLAT</small>
@@ -260,7 +208,7 @@
         </div>
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="#">
-            <img src="../static/dont_upload/room3.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+            <img src="static/dont_upload/room3.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-between align-items-baseline">
                     <small class="h4">SELF-CONTAIN</small>
@@ -272,7 +220,7 @@
         </div>
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="#">
-            <img src="../static/dont_upload/room4.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+            <img src="static/dont_upload/room4.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-between align-items-baseline">
                     <small class="h4">SELF-CONTAIN</small>
@@ -294,46 +242,8 @@
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
-<footer class="pt-4  "> 
-    <div class="container-md position-relative px-5">
-        <ul class="list-group list-group-flush mb-5">
-            <li class="list-group-item h3">CONTACT US</li>
-            <li class="list-group-item"> +234...</li>
-            <li class="list-group-item"> info@unizikhousing.com</li>
-            <li class="list-group-item"> 
-                <a href="#" class="text-decoration-none text-white">
-                    <i class="fa-brands fa-facebook"></i>
-                    facebook
-                </a>
-            </li>
-            <li class="list-group-item"> 
-                located in front of school gate
-            </li>
-        </ul>
-    
-        <ul class="list-group list-group-flush align-right ">
-            <li class="list-group-item h3">QUICK LINKS </li>
-           <li class="list-group-item">
-               <a href="#" class="text-decoration-none text-white"> HOME</a>
-           </li>
-           <li class="list-group-item">
-            <a href="#" class="text-decoration-none text-white">ABOUT</a>
-           </li>
-           <li class="list-group-item">
-            <a href="#" class="text-decoration-none text-white"> LOGIN</a>
-           </li>
-           <li class="list-group-item">
-            <a href="#" class="text-decoration-none text-white"> SIGNUP</a>
-           </li>
-        </ul>
-        <div class="mt-5">
-        <div class="text-center fw-bold text-dark h6"> &copy; ALL RIGHTS RESERVED </div>
-            <img src="../static/images/footer_image_small.png" class="img-fluid w-100" alt="" srcset="">
-        </div>
-    </div>
- 
-</footer>
 
+<%- include('./partials/footer.ejs') -%>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
