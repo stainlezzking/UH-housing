@@ -16,9 +16,14 @@ app.get("/space/:id", (req,res)=>{
     res.render("details")
 })
 
+app.get("/login", (req,res)=>{
+    res.render("user_login")
+})
+
 app.get("/roomspace", (req,res)=>{
     res.render("FindRoom")
 })
+
 
 // make all request come from another module 
 // make all 404 links redirect to home page
