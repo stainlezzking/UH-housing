@@ -36,10 +36,14 @@ app.get("/postSpace", (req,res)=>{
 app.get("/agent/uploadRoom", (req,res)=>{
     res.render("post-room")
 })
-
 app.get("/roomspace", (req,res)=>{
     res.render("FindRoom")
 })
+
+app.get("/agent/uploadRoomate", (req,res)=>{
+    res.render("agent-upload-roomate")
+})
+
 
 
 
