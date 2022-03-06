@@ -2,7 +2,7 @@ const express = require("express")
 
 
 const app = express()
-app.use("/static",express.static("static/"))
+app.use(express.static("static"))
 
 app.set("view engine", "ejs")
 
@@ -26,6 +26,10 @@ app.get("/register", (req,res)=>{
 
 app.get("/profile", (req,res)=>{
     res.render("user_profile")
+})
+
+app.get("/agent/uploadRoom", (req,res)=>{
+    res.render("post-room")
 })
 
 app.get("/roomspace", (req,res)=>{
