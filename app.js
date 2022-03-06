@@ -20,9 +20,15 @@ app.get("/login", (req,res)=>{
     res.render("user_login")
 })
 
+app.get("/register", (req,res)=>{
+    res.render("user_register")
+})
+
 app.get("/roomspace", (req,res)=>{
     res.render("FindRoom")
 })
+
+
 
 
 // make all request come from another module 
