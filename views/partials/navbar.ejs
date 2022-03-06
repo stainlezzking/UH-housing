@@ -114,11 +114,12 @@
   #menu-toggle.open #cross span:nth-child(1) {
     height: 90%;
     transition-delay: 0.625s;
-    color: r;
+    background-color: rgb(0, 0, 0, .6);
   }
   #menu-toggle.open #cross span:nth-child(2) {
     width:90%;
     transition-delay: 0.375s;
+    background-color: rgb(0, 0, 0, .6);
   }
 
   /* remove border from button during focus */
@@ -129,9 +130,9 @@
 }
 </style>
     <div class="container-lg p-0">
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand d-flex" href="#">
+                <a class="navbar-brand d-flex" href="/home">
                     <img src="/static/images/logo.png" alt="logo of unizik housing" width="30" class="d-inline-block align-text-top me-1">
                     <div class="name" >Unizik Housing</div>
                   </a>
@@ -154,27 +155,34 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Find Roomate</a>
+                    <a class="nav-link" href="/roomatespace">Find Roomate</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Find Lodge </a>
+                    <a class="nav-link" href="/roomspace">Find Lodge </a>
                   </li>
                   <li class="nav-item">
-                    <!-- show this and the profile link when they are logged in -->
-                    <a class="nav-link" href="#">Upload Room</a>
+                    <a class="nav-link" href="/login">Login</a>
                   </li>
                   <li class="nav-item">
-                    <!-- show this and the profile link when they are logged in -->
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="/register">Register </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Register </a>
+                    <a class="nav-link" href="/agent/uploadroom">Upload Room</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="/agent/uploadroomate">Upload Roomate</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About Us </a>
+                    <a class="nav-link" href="/postspace">Post Space</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout </a>
                   </li>
                 </ul>
               </div>

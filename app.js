@@ -7,6 +7,9 @@ app.use("/static",express.static("static"))
 app.set("view engine", "ejs")
 
 
+app.get("/", (req, res)=>{
+    res.render("home")
+})
 app.get("/home", (req, res)=>{
     res.render("home")
 })
@@ -37,14 +40,20 @@ app.get("/agent/uploadRoom", (req,res)=>{
     res.render("post-room")
 })
 app.get("/roomspace", (req,res)=>{
+    // delete the filter search select botton for either room or roomate, since this page is room
     res.render("FindRoom")
+})
+
+app.get("/roomateSpace", (req,res)=>{
+    // delete the filter search select botton for either room or roomate, since this page is room
+    res.render("findRoomMate")
 })
 
 app.get("/agent/uploadRoomate", (req,res)=>{
     res.render("agent-upload-roomate")
 })
 
-
+2
 
 
 
