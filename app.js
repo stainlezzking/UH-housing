@@ -24,6 +24,10 @@ app.get("/register", (req,res)=>{
     res.render("user_register")
 })
 
+app.get("/profile", (req,res)=>{
+    res.render("user_profile")
+})
+
 app.get("/roomspace", (req,res)=>{
     res.render("FindRoom")
 })
