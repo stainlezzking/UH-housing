@@ -2,7 +2,7 @@ const express = require("express")
 
 
 const app = express()
-app.use(express.static("static"))
+app.use("/static",express.static("static"))
 
 app.set("view engine", "ejs")
 
@@ -28,6 +28,11 @@ app.get("/profile", (req,res)=>{
     res.render("user_profile")
 })
 
+// there should be a page for create space whre users can chooose if its 
+// roomate space or there room they want to sell
+app.get("/postSpace", (req,res)=>{
+    res.render("user-post-roomate-space")
+})
 app.get("/agent/uploadRoom", (req,res)=>{
     res.render("post-room")
 })
