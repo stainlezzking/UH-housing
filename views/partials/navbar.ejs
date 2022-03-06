@@ -1,0 +1,191 @@
+<style>
+    /* NAVBAR CSS */
+
+.navbar-brand{
+    align-items: s;
+    align-items: center;
+}
+.navbar-brand div.name{
+    padding-top: 4px;
+}
+@media (min-width: 800px){
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+    .navbar-toggler{
+        display: none;
+    }
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+        margin-left: auto;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .5rem;
+        padding-left: .5rem;
+    }
+}
+
+
+@media (max-width: 800px){
+    .navbar-nav {
+        text-align: center;
+    }
+}
+
+/* hamburger menu */
+
+  #hamburger span {
+    display: block;
+    background: #566973;
+    border-radius: 2px;
+  }
+  
+  #menu-toggle {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    opacity: 1;
+    border-radius: 5px;
+  }
+  #menu-toggle:hover #hamburger span {
+    color: white;
+  }
+  #menu-toggle #hamburger {
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    top: -7px; 
+    left: -1px;     
+  }
+  #menu-toggle #hamburger span {
+    width: 37px;
+    height: 3px;
+    position: relative;
+    margin: 10px 0;
+  }
+  #menu-toggle #hamburger span:nth-child(1) {
+    transition-delay: 0.5s;
+  }
+  #menu-toggle #hamburger span:nth-child(2) {
+    transition-delay: 0.625s;
+  }
+  #menu-toggle #hamburger span:nth-child(3) {
+    transition-delay: 0.75s;
+  }
+  #menu-toggle #cross {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transform: rotate(45deg);
+    top: 2px;
+  }
+  #menu-toggle #cross span:nth-child(1) {
+    height: 0px;
+    width: 4px;
+    position: absolute;
+    top: 3%;
+    left: 14.8px;
+    transition-delay: 0s;
+  }
+  #menu-toggle #cross span:nth-child(2) {
+    width: 0px;
+    height: 4px;
+    position: absolute;
+    left: 3%;
+    top: 14.8px;
+    transition-delay: 0.25s;
+  }
+  
+  #menu-toggle.open #hamburger span {
+    width: 0%;
+  }
+  #menu-toggle.open #hamburger span:nth-child(1) {
+    transition-delay: 0s;
+  }
+  #menu-toggle.open #hamburger span:nth-child(2) {
+    transition-delay: 0.125s;
+  }
+  #menu-toggle.open #hamburger span:nth-child(3) {
+    transition-delay: 0.25s;
+  }
+  #menu-toggle.open #cross span:nth-child(1) {
+    height: 90%;
+    transition-delay: 0.625s;
+    background-color: rgb(0, 0, 0, .6);
+  }
+  #menu-toggle.open #cross span:nth-child(2) {
+    width:90%;
+    transition-delay: 0.375s;
+    background-color: rgb(0, 0, 0, .6);
+  }
+
+  /* remove border from button during focus */
+  .navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 0.05rem;
+}
+</style>
+    <div class="container-lg p-0">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex" href="/home">
+                    <img src="/static/images/logo.png" alt="logo of unizik housing" width="30" class="d-inline-block align-text-top me-1">
+                    <div class="name" >Unizik Housing</div>
+                  </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <div id="menu-toggle">
+                    <div id="hamburger">
+                      <span class="burgers"></span>
+                      <span class="burgers"></span>
+                      <span class="burgers"></span>
+                    </div>
+                    <div id="cross">
+                      <span class="burgers"></span>
+                      <span class="burgers"></span>
+                    </div>
+                  </div>
+              </button>
+              <div class="collapse navbar-collapse ms-auto" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/roomatespace">Find Roomate</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/roomspace">Find Lodge </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Register </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/agent/uploadroom">Upload Room</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/agent/uploadroomate">Upload Roomate</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/postspace">Post Space</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </div>

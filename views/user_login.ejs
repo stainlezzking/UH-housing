@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../static/images/logo.png" type="image/x-icon">
-    <title>Login </title>
+    <title>Login into your account</title>
+    <link rel="shortcut icon" href="static/images/favicon.png" type="image/x-icon">
+    <!-- font style -->
+    <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&display=swap" rel="stylesheet">
 </head>
-<style> 
+<style>
 
 body{
   font-family: 'Carrois Gothic', sans-serif;
+  background-image: url("../static/images/bg_chilling_room.jpg");
+  background-position: center;
 }
 
 /* helpers/align.css */
@@ -40,6 +44,8 @@ body{
   max-width: 320px;
   max-width: 20rem;
   width: 90%;
+  padding: 1rem ;
+  background-color: rgb(0, 0, 0, .2);
 }
 
 /* helpers/hidden.css */
@@ -194,7 +200,7 @@ input[type='submit'] {
 }
 
 .login input[type='submit'] {
-  background-color: #ea4c88;
+  background-color: #4cea66;
   color: #eee;
   font-weight: 700;
   text-transform: uppercase;
@@ -202,7 +208,7 @@ input[type='submit'] {
 
 .login input[type='submit']:focus,
 .login input[type='submit']:hover {
-  background-color: #d44179;
+  background-color: #12a22a;
 }
 
 /* modules/text.css */
@@ -217,11 +223,14 @@ p {
 .text--center {
   text-align: center;
 }
+.input:focus ~ label {
+    background-color: white;
+}
 </style>
 <body class="align">
     <div class="grid">
         <div class="brand text--center mb-2">
-            <img src="../static/images/logo.svg" width="60px" alt="" srcset="">
+            <img src="/static/images/logo.svg" width="60px" alt="" srcset="">
         </div>
         <form action="#" method="#" class="form login">
     
@@ -232,7 +241,6 @@ p {
             </label>
             <input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required="">
           </div>
-    
           <div class="form__field">
             <label for="login__password">
                 <svg xmlns="http://www.w3.org/2000/svg"  class="icon" viewBox="0 0 448 512"><path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/></svg>
@@ -240,14 +248,11 @@ p {
             </label>
             <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required="">
           </div>
-    
           <div class="form__field">
             <input type="submit" value="Sign In">
           </div>
-    
         </form>
-    
-        <p class="text--center">Not a agent? <a href="#">Apply</a> <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#arrow-right"></use></svg></p>
+        <p class="text--center " style="color: white;">Don't have an account? <a href="#" style="color: #ea4cb5;">Register</a></p>
     
       </div>
 
