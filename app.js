@@ -1,11 +1,82 @@
 const express = require("express")
+const bodyParser = require("body-parser")
+const passport = require("passport")
+const session = require("express-session")
+const flash = require("express-flash")
+const localStrategy = require("passport-local").Strategy
+
+
+// local modules
+const {USC,registerUser} = require("./modules/db")
 
 
 const app = express()
 app.use("/static",express.static("static"))
 
 app.set("view engine", "ejs")
+app.use(express.urlencoded({extended: true}))
+// session
+app.use(session({
+    secret : "any fucking string",
+    resave : false,
+    saveUninitialized : false,
+    cookie : {
+        maxAge : 1000  * 60 * 60 * 24 
+    }
+   
+}))
 
+app.use(passport.initialize())
+
+app.use(passport.session())
+app.use(flash())
+
+
+passport.serializeUser((user,done)=>{
+    done(null,{id :user._id})
+})
+
+passport.deserializeUser((user,done)=>{
+    USC.findById(user.id)
+    .then(user=>{
+        if(user){
+           return done(null,user)
+        }
+    })
+})
+
+passport.use(new localStrategy(
+    (user,password,done)=>{
+        USC.findOne({username: user.toLowerCase()},
+         function(err,data){
+            if(err) { return done(err)}
+            if(!data){
+                return done(null, false, {message : "no user found, if you don't have an account, register one"})
+            }
+            if(data){
+                // i dont know why but the tutorial used try, catch maybe its to handle the error
+                try{
+                    if(data.password === password){
+                        return done(null,data)
+                    }else{
+                        return done(null, false, {message : "password incorrect, try again"})
+                    }
+                }catch(err){
+                    done(err)
+                }
+            }
+        })
+    })
+)
+
+function isAuthMiddleWare(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }else{
+        return res.redirect("/login")
+        
+    }
+}
 
 app.get("/", (req, res)=>{
     res.render("home")
@@ -23,11 +94,23 @@ app.get("/login", (req,res)=>{
     res.render("user_login")
 })
 
-app.get("/register", (req,res)=>{
+app.post("/login",passport.authenticate("local",{
+    successRedirect : "/profile",
+    failureRedirect : "/login",
+    failureFlash : true
+}))
+
+app.get("/register", function(req,res){
     res.render("user_register")
 })
 
-app.get("/profile", (req,res)=>{
+app.post("/register", registerUser,  passport.authenticate('local', { failureRedirect: '/login' }),
+        function(req, res) {
+             return res.redirect('/profile');
+        }
+)
+
+app.get("/profile",isAuthMiddleWare, (req,res)=>{
     res.render("user_profile")
 })
 
@@ -53,7 +136,7 @@ app.get("/agent/uploadRoomate", (req,res)=>{
     res.render("agent-upload-roomate")
 })
 
-2
+
 
 
 
