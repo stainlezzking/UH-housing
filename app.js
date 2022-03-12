@@ -32,6 +32,15 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 
+app.use(function(req,res,next){
+    if(req.isAuthenticated()){
+       res.locals.user = req.user
+       next()
+    }else{
+        res.locals.user = null
+        next()
+    }
+})
 
 passport.serializeUser((user,done)=>{
     done(null,{id :user._id})
@@ -78,6 +87,8 @@ function isAuthMiddleWare(req,res,next){
         
     }
 }
+
+
 
 app.get("/", (req, res)=>{
     res.render("home")

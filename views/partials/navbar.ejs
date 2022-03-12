@@ -160,30 +160,42 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/roomspace">Find Lodge </a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/register">Register </a>
-                  </li>
+                  <%# if user is logged out, show all this %>
+                  <% if(!user){%>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/register">Register </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/about">About Us </a>
+                    </li>
+                <% }%>
+                  <% if(user){%>
+                <%# if this user is an agent, his level would be above 0 %>
+                <% if(user.agent.level){%>
                   <li class="nav-item">
                     <a class="nav-link" href="/agent/uploadroom">Upload Room</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/agent/uploadroomate">Upload Roomate</a>
                   </li>
+                <% }else{%>
                   <li class="nav-item">
                     <a class="nav-link" href="/postspace">Post Space</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/about">About Us </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout </a>
-                  </li>
+                <% }%>
+                <li class="nav-item">
+                  <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/about">About Us </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout </a>
+                </li>
+                <% } %>
                 </ul>
               </div>
             </div>
