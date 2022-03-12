@@ -15,6 +15,9 @@ app.use("/static",express.static("static"))
 
 app.set("view engine", "ejs")
 app.use(express.urlencoded({extended: true}))
+
+app.use(flash())
+
 // session
 app.use(session({
     secret : "any fucking string",
@@ -25,11 +28,9 @@ app.use(session({
     }
    
 }))
-
 app.use(passport.initialize())
 
 app.use(passport.session())
-app.use(flash())
 
 
 passport.serializeUser((user,done)=>{
@@ -99,16 +100,16 @@ app.post("/login",passport.authenticate("local",{
     failureRedirect : "/login",
     failureFlash : true
 }))
-
+    
 app.get("/register", function(req,res){
     res.render("user_register")
 })
 
-app.post("/register", registerUser,  passport.authenticate('local', { failureRedirect: '/login' }),
-        function(req, res) {
-             return res.redirect('/profile');
-        }
-)
+app.post("/register", registerUser,passport.authenticate("local",{
+    successRedirect : "/profile",
+    failureRedirect : "/register",
+    failureFlash : true
+}))
 
 app.get("/profile",isAuthMiddleWare, (req,res)=>{
     res.render("user_profile")

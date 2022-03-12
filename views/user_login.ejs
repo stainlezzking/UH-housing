@@ -233,12 +233,45 @@ p {
     background-color: white;
 }
 </style>
+<style>
+  .personal-modal{
+    padding: 1rem ;
+    width: 80%;
+    background-color: white;
+    color: black;
+    min-width: 300px;
+    max-width: 500px;
+    transition: opacity .6s ease-in;
+    opacity: 0;
+    text-align: center;
+    border-radius: 5px ;
+  }
+  .show{
+    opacity: 1;
+  }
+</style>
 <body class="align">
+  <%= console.log(messages) %>
+       <!-- error model -->
+       <% if(messages.error){ %>
+        <div class="personal-modal show" id="myModal" tabindex="-1">
+          <%= messages.error %>
+      </div> 
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script>
+       setTimeout(()=>{
+          document.getElementById("myModal").classList.remove("show")
+       },2500).then(()=> document.getElementById("myModal").style.display = "block")
+    </script>
+        <% } %>
+
     <div class="grid">
         <div class="brand text--center mb-2">
-            <img src="/static/images/logo.svg" width="60px" alt="" srcset="">
+          <a href="/home">
+            <img src="/static/images/logo.svg" width="60px" alt="unizik housing brand logo svg file" srcset="">
+          </a>
         </div>
-        <form action="#" method="#" class="form login">
+        <form action="/login" method="POST" class="form login">
     
           <div class="form__field">
             <label for="login__username">
@@ -258,8 +291,7 @@ p {
             <input type="submit" value="Sign In">
           </div>
         </form>
-        <p class="text--center " style="color: white;">Don't have an account? <a href="#" style="color: #ea4cb5;">Register</a></p>
-    
+        <p class="text--center " style="color: white;">Don't have an account? <a href="/register" style="color: #ea4cb5;">Register</a></p>
       </div>
 
     
