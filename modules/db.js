@@ -40,9 +40,20 @@ const user = new mongoose.Schema({
             default : 0
         }
         
-    }
+    },
+    spaces : [
+        {
+            id : String,
+        }
+    ],
+    favouriteSpaces : [
+        {
+            id : String,
+        }
+    ]
 }, {
-    minimize : false
+    minimize : false,
+    timestamps: true
 })
 
 

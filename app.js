@@ -89,7 +89,6 @@ function isAuthMiddleWare(req,res,next){
 }
 
 
-
 app.get("/", (req, res)=>{
     res.render("home")
 })
@@ -158,9 +157,17 @@ app.get("/agent/uploadRoomate", (req,res)=>{
 // posting routes 
 app.use(postingRoutes)
 
-// make all request come from another module 
-// make all 404 links redirect to home page
+app.get("*", function(req,res){
+    res.send("redirect this later t0 404 page or the home page")
+})
 
+// ADD ACTIVE ON NAVBAR
+// POSTED ROUTES
+// FAVOURITE ROUTE
+// UPLOAD ROOMATE {USER}
+// UPLOAD ROOM {AGENT}
+// UPLOAD ROOMATE {AGENT} 
+// MAKE USER AGENT {ADMIN}//later on
 
 app.listen(3000, ()=>{
     console.log("server runnning on port 3000")
