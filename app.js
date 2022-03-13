@@ -126,6 +126,11 @@ app.get("/profile",isAuthMiddleWare, (req,res)=>{
     res.render("user_profile")
 })
 
+app.get("/logout", function(req,res){
+    req.logOut()
+    res.redirect("/home")
+})
+
 // there should be a page for create space whre users can chooose if its 
 // roomate space or there room they want to sell
 app.get("/postSpace", (req,res)=>{
