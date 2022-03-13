@@ -17,17 +17,22 @@ const user = new mongoose.Schema({
         type : String,
         lowercase : true,
         unique : true,
-        required : true
+        required : [true, "the username field is empty"]
     },
     email : {
         type : String,
         lowercase: true,
         unique : true,
-        required : true,
+       required : [true, "the email field is empty"]
+
     },
     password : {
         type : String,
-        required : true
+        required : [true, "the password field is empty"]
+    },
+    number : {
+        type : Number,
+        required : [true, "the phone number field is empty"]
     },
     agent :{
         level : {

@@ -4,6 +4,7 @@ const passport = require("passport")
 const session = require("express-session")
 const flash = require("express-flash")
 const localStrategy = require("passport-local").Strategy
+const postingRoutes = require("./modules/posting_routes")
 
 
 // local modules
@@ -84,7 +85,6 @@ function isAuthMiddleWare(req,res,next){
         return next()
     }else{
         return res.redirect("/login")
-        
     }
 }
 
@@ -103,6 +103,7 @@ app.get("/space/:id", (req,res)=>{
 })
 
 app.get("/login", (req,res)=>{
+    // if user is already logged in
     res.render("user_login")
 })
 
@@ -154,8 +155,8 @@ app.get("/agent/uploadRoomate", (req,res)=>{
 })
 
 
-
-
+// posting routes 
+app.use(postingRoutes)
 
 // make all request come from another module 
 // make all 404 links redirect to home page
