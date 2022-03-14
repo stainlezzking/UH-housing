@@ -133,7 +133,7 @@ app.get("/logout", function(req,res){
 
 // there should be a page for create space whre users can chooose if its 
 // roomate space or there room they want to sell
-app.get("/postSpace", (req,res)=>{
+app.get("/postSpace",isAuthMiddleWare, (req,res)=>{
     res.render("user-post-roomate-space")
 })
 app.get("/agent/uploadRoom", (req,res)=>{

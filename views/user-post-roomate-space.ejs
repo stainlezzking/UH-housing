@@ -92,18 +92,51 @@ textarea::placeholder{
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(2) {
     display: inline;
 }
+.personal-modal{
+    padding: 1rem ;
+    width: 80%;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    min-width: 300px;
+    max-width: 500px;
+    transition: all .6s ease-in;
+    opacity: 1;
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    border-radius: 5px ;
+  }
+  .show{
+    opacity: 1;
+    top: 100px;
+  }
     </style>
 </head>
 <body>
   <%- include("./partials/navbar.ejs") -%>
     <!-- banner section -->
+  <!-- error model -->
+  <% if(messages.error){ %>
+    <div class="personal-modal show" id="myModal" tabindex="-1">
+      <%= messages.error %>
+    </div> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      setTimeout(()=>{
+        document.getElementById("myModal").classList.remove("show")
+      },2500)
+    </script>
+  <% } %>
     <h3 class="title text-center mt-5 mb-4"> POST ROOMATE SPACE</h3>
 
     <div class="container form_container">
-        <form class="postRoom_form" >
+        <form class="postRoom_form" method="POST" enctype="multipart/form-data">
             <div class="input-group mb-4">
                 <label for="inputGroupFile01" class="d-block mb-2 w-100"> images of the room (3-5)</label>
-                <input type="file" class="form-control" id="inputGroupFile01" multiple accept="image/*" required>
+                <input type="file" class="form-control" name="pictures" id="inputGroupFile01" multiple accept="image/*" required>
               </div>
               <div>
                 <div class="input-group mb-3">
@@ -120,7 +153,7 @@ textarea::placeholder{
                   <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> Amenities </h3>
                   <div class="select_tag_cover">
                       <article class="feature1">
-                        <input type="checkbox" id="feature1"/>
+                        <input type="checkbox" name="amenities" value="running water" id="feature1"/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -129,20 +162,9 @@ textarea::placeholder{
                           </span>
                         </div>
                       </article>
-                
-                      <article class="feature2">
-                        <input type="checkbox" id="feature2"/>
-                        <div>
-                          <i class="fa-solid fa-plus"></i>
-                          <i class="fa-solid fa-check"></i>
-                          <span class="ps-1">
-                           light
-                          </span>
-                        </div>
-                      </article>
-                      
+              
                       <article class="feature3">
-                        <input type="checkbox" id="feature3"/>
+                        <input type="checkbox" name="amenities" value="solar" id="feature3"/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -153,7 +175,7 @@ textarea::placeholder{
                       </article>
                       
                       <article class="feature4">
-                        <input type="checkbox" id="feature4" />
+                        <input type="checkbox"  name="section" value="kitchen"  id="feature4" />
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -164,7 +186,7 @@ textarea::placeholder{
                       </article>
 
                       <article class="feature5">
-                          <input type="checkbox" id="feature5" />
+                          <input type="checkbox" name="section" value="corridor" id="feature5" />
                           <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -175,7 +197,7 @@ textarea::placeholder{
                         </article>
 
                         <article class="feature6">
-                          <input type="checkbox" id="feature6"/>
+                          <input type="checkbox"  name="amenities" value="well" id="feature6"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -185,7 +207,7 @@ textarea::placeholder{
                           </div>
                         </article>
                         <article class="featur07">
-                          <input type="checkbox" id="featur07"/>
+                          <input type="checkbox" name="amenities" value="prepaid-Meter" id="featur07"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -195,23 +217,12 @@ textarea::placeholder{
                           </div>
                         </article>
                         <article class="feature8">
-                          <input type="checkbox" id="feature8"/>
+                          <input type="checkbox" name="amenities" value="Meter" id="feature8"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
                             <span class="ps-1">
                             Meter
-                            </span>
-                          </div>
-                        </article>
-                        
-                        <article class="feature9">
-                          <input type="checkbox" id="feature9"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                            solar
                             </span>
                           </div>
                         </article>
@@ -231,10 +242,10 @@ textarea::placeholder{
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Full name</label>
                 <input type="text" class="form-control" id="inputGroupFile08" required>
               </div>
-              <!-- <div class="input-group mb-4">
+              <div class="input-group mb-4">
                 <label for="inputGroupFile09" class="d-block mb-2 w-100"> Phone number</label>
-                <input type="number" class="form-control" id="inputGroupFile09" required>
-              </div> -->
+                <input type="number" class="form-control" id="inputGroupFile09" value="837907389" required disabled>
+              </div>
               <!-- removed phone number, so that user can change their phone numbers direct from the profile, and reflect on all current post -->
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Lodge full location</label>
