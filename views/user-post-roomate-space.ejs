@@ -86,6 +86,9 @@ textarea::placeholder{
   .select_tag_cover input[type=checkbox]:checked ~ div {
     background-color: #50bcf2;
   }
+  .select_tag_cover input[type=radio]:checked ~ div {
+    background-color:#50bcf2;
+  }
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(1) {
     display: none;
 }
@@ -108,6 +111,7 @@ textarea::placeholder{
     transform: translate(-50%, 0);
     text-align: center;
     border-radius: 5px ;
+    z-index: 2;
   }
   .show{
     opacity: 1;
@@ -158,7 +162,7 @@ textarea::placeholder{
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
                           <span class="ps-1">
-                          running water
+                            running water
                           </span>
                         </div>
                       </article>
@@ -185,6 +189,28 @@ textarea::placeholder{
                         </div>
                       </article>
 
+                      <article class="feature4">
+                        <input type="checkbox"  name="section" value="Room"  id="feature4" />
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                            Room
+                          </span>
+                        </div>
+                      </article>
+
+                      <article class="feature4">
+                        <input type="checkbox"  name="section" value="toilet & Bathroom"  id="feature4" />
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                            toilet&Bathroom
+                          </span>
+                        </div>
+                      </article>
+
                       <article class="feature5">
                           <input type="checkbox" name="section" value="corridor" id="feature5" />
                           <div>
@@ -207,7 +233,7 @@ textarea::placeholder{
                           </div>
                         </article>
                         <article class="featur07">
-                          <input type="checkbox" name="amenities" value="prepaid-Meter" id="featur07"/>
+                          <input type="radio" name="amenities" value="prepaid-Meter" id="featur07"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -217,7 +243,7 @@ textarea::placeholder{
                           </div>
                         </article>
                         <article class="feature8">
-                          <input type="checkbox" name="amenities" value="Meter" id="feature8"/>
+                          <input type="radio" name="amenities" value="Meter" id="feature8"/>
                           <div>
                             <i class="fa-solid fa-plus"></i>
                             <i class="fa-solid fa-check"></i>
@@ -236,15 +262,15 @@ textarea::placeholder{
 
               <div class="input-group mb-4">
                 <label for="inputGroupFile10" class="d-block mb-2 w-100"> Lodge Name</label>
-                <input type="numer" class="form-control" id="inputGroupFile10" required>
+                <input type="numer" name="lodgeName" class="form-control" id="inputGroupFile10" required>
               </div> 
               <div class="input-group mb-4">
-                <label for="inputGroupFile08" class="d-block mb-2 w-100"> Full name</label>
-                <input type="text" class="form-control" id="inputGroupFile08" required>
+                <label for="inputGroupFile08" class="d-block mb-2 w-100"> Room owner's name</label>
+                <input type="text" name="name" class="form-control" id="inputGroupFile08" required>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile09" class="d-block mb-2 w-100"> Phone number</label>
-                <input type="number" class="form-control" id="inputGroupFile09" value="837907389" required disabled>
+                <input type="number" class="form-control" id="inputGroupFile09" name="number" required >
               </div>
               <!-- removed phone number, so that user can change their phone numbers direct from the profile, and reflect on all current post -->
               <div class="input-group mb-4">
