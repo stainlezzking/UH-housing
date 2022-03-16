@@ -6,6 +6,12 @@ let { upload,multer } = require("./multerSetup")
 const router = express.Router()
 
 router.use(express.urlencoded({extended : true}))
+router.use(function(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect("/login")
+})
 router.use(flash())
 
 upload = upload.array("pictures", 5)
@@ -44,6 +50,7 @@ router.post("/postSpace", function(req,res){
           }
           console.log("successfully uploaded that sht")
           req.flash("error", "your space has been added has been successfully uploaded")
+          console.log(req.body)
         //   redirect them to the details of the space
           return res.redirect("/postSpace")
         //   BEFORE YOU UPLOAD THIS IMAGE TO S3 BUCKET, MAKE SURE THE USER EXIST B4 SOME1 USES SOMETHING LIKE POSTMAN
