@@ -6,7 +6,34 @@ mongoose.connect("mongodb://localhost:27017/UH", function(err, data){
     console.log("DB connected successfully")
 })
 
+const RoomateSpace = new mongoose.Schema({
+    name : String,
+    number : String,
+    user: String,
+    lodgeName : String,
+    images : String,
+    price : Number,
+    junction : String,
+    location : String,
+    amenities : [String],
+    section : [String],
+    description : String,
+    Available : {type : Boolean, default : true},
+    show : {type : Boolean, default : true}
+},{
+    minimize: false,
+    timestamps : true,
+})
 
+// maybe use another server to be serving up images as blob, reduce workload
+const images = new mongoose.Schema({
+    Picturepost : [{
+        blob : Buffer,
+        mimeType : String,
+        show : {type : Boolean, default : true},
+        building : {type : Boolean, default: false}
+    }]
+})
 
 const user = new mongoose.Schema({
     name :{
