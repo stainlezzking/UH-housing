@@ -101,6 +101,7 @@ textarea::placeholder{
     background-color: white;
     color: black;
     font-weight: bold;
+    font-size: .7em;
     min-width: 300px;
     max-width: 500px;
     transition: all .6s ease-in;
@@ -111,7 +112,7 @@ textarea::placeholder{
     transform: translate(-50%, 0);
     text-align: center;
     border-radius: 5px ;
-    z-index: 2;
+    z-index: 200;
   }
   .show{
     opacity: 1;
@@ -127,37 +128,39 @@ textarea::placeholder{
     <div class="personal-modal show" id="myModal" tabindex="-1">
       <%= messages.error %>
     </div> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
       setTimeout(()=>{
         document.getElementById("myModal").classList.remove("show")
       },2500)
     </script>
   <% } %>
-    <h3 class="title text-center mt-5 mb-4"> POST ROOMATE SPACE</h3>
+    <h3 class="title text-center mt-5 mb-4" id="title"> POST ROOMATE SPACE</h3>
 
     <div class="container form_container">
         <form class="postRoom_form" method="POST" enctype="multipart/form-data">
-            <div class="input-group mb-4">
-                <label for="inputGroupFile01" class="d-block mb-2 w-100"> images of the room (3-5)</label>
-                <input type="file" class="form-control" name="pictures" id="inputGroupFile01" multiple accept="image/*" required>
+            <div class="input-group mb-3">
+                <label for="inputGroupFile01" class="d-block mb-2 w-100"> images of the room (3-5) </label>
+                <input type="file" class="form-control" name="pictures" id="inputGroupFile01" required multiple accept="image/*" >
+                <label for="inputGroupFile01" class="d-block w-100 " style="font-size:small;"> each image should be < 5mb, (screenshot&crop to reduce size)</label>
               </div>
               <div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="price">price</label>
-                    <input type="number" class="form-control " id="price" name="price" required>
+                    <input type="Number" class="form-control " id="price" name="price" required >
                   </div>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile07" class="d-block mb-2 w-100"> Closest Junction</label>
-                <input type="text" class="form-control" id="inputGroupFile07" placeholder="closest/popular junction to the lodge" required>
+                <input type="text" class="form-control" id="inputGroupFile07" name="junction" required placeholder="closest/popular junction to the lodge" >
               </div>
               <div class="input-group pt-3">
                 <div class="input-group mb-3">
-                  <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> Amenities </h3>
+                  <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> Amenities 
+                  <span class="d-block" style="font-size:small;"> Select amenities available</span>  
+                  </h3>
                   <div class="select_tag_cover">
                       <article class="feature1">
-                        <input type="checkbox" name="amenities" value="running water" id="feature1"/>
+                        <input type="checkbox" name="amenities" value="running water"  id="feature1"/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -179,7 +182,7 @@ textarea::placeholder{
                       </article>
                       
                       <article class="feature4">
-                        <input type="checkbox"  name="section" value="kitchen"  id="feature4" />
+                        <input type="checkbox"  name="amenities" value="kitchen"  id="feature11" />
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -189,8 +192,9 @@ textarea::placeholder{
                         </div>
                       </article>
 
+                      
                       <article class="feature4">
-                        <input type="checkbox"  name="section" value="Room"  id="feature4" />
+                        <input type="checkbox"  name="amenities" value="Room"  id="feature9" checked/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -201,7 +205,7 @@ textarea::placeholder{
                       </article>
 
                       <article class="feature4">
-                        <input type="checkbox"  name="section" value="toilet & Bathroom"  id="feature4" />
+                        <input type="checkbox"  name="amenities" value="toilet & Bathroom"  id="feature10" />
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -212,7 +216,7 @@ textarea::placeholder{
                       </article>
 
                       <article class="feature5">
-                          <input type="checkbox" name="section" value="corridor" id="feature5" />
+                          <input type="checkbox" name="amenities" value="corridor" id="feature5" />
                           <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -257,25 +261,25 @@ textarea::placeholder{
               </div>
               <div class="input-group mb-5">
                 <label for="description" class="d-block mb-2"> Details</label>
-                <textarea name="description"  class="d-block w-100 p-2" placeholder="leave details like the properties you own and the kind of roomate your'e looking for" required></textarea>
+                <textarea name="description"  class="d-block w-100 p-2" required placeholder="leave details like the properties you own and the kind of roomate your'e looking for" ></textarea>
               </div>
 
               <div class="input-group mb-4">
                 <label for="inputGroupFile10" class="d-block mb-2 w-100"> Lodge Name</label>
-                <input type="numer" name="lodgeName" class="form-control" id="inputGroupFile10" required>
+                <input type="numer" name="lodgeName" class="form-control" required id="inputGroupFile10" >
               </div> 
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Room owner's name</label>
-                <input type="text" name="name" class="form-control" id="inputGroupFile08" required>
+                <input type="text" name="name" class="form-control" required id="inputGroupFile08" >
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile09" class="d-block mb-2 w-100"> Phone number</label>
-                <input type="number" class="form-control" id="inputGroupFile09" name="number" required >
+                <input type="number" class="form-control" id="inputGroupFile09" required name="number"  >
               </div>
               <!-- removed phone number, so that user can change their phone numbers direct from the profile, and reflect on all current post -->
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Lodge full location</label>
-                <textarea name="location"  class="d-block w-100 p-2" placeholder="describe location from ifite school gate" required></textarea>
+                <textarea name="location"  class="d-block w-100 p-2" required placeholder="describe location from ifite school gate" ></textarea>
               </div>
               <button type="submit" class="btn btn-outline-info mx-auto d-block"> Post</button>
         </form>
@@ -286,12 +290,39 @@ textarea::placeholder{
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
       var gb ;
-      document.getElementById("inputGroupFile01").addEventListener("change", function(event){
-        console.log(event)
+      let mssg = document.createElement("div");
+         mssg.className = "personal-modal show"
+         mssg.setAttribute("id","myamenities" )
+        var alertMssg = function(msg){
+          mssg.innerHTML = msg
+          document.getElementsByTagName("body")[0].insertBefore(mssg,document.getElementById("title"))
+          document.getElementById("myamenities").style.top = document.documentElement.scrollTop + 100 + "px"
+
+          setTimeout(()=>{
+          document.getElementById("myamenities").classList.remove("show")
+          },2500)
+          setTimeout(()=> document.querySelector("body").removeChild(document.getElementById("myamenities")), 2500)
+        }
+
+          document.getElementById("inputGroupFile01").addEventListener("change", function(event){
           if(event.target.files.length < 3 || event.target.files.length >5){
-            alert("images of the room should be between 3 and 5")
-            document.getElementById("inputGroupFile01").value = ""
+            alertMssg("images of the room should be between 3 and 5")
+            document.querySelector("input[type=file]").value = ""
           }
+       })
+        window.addEventListener("scroll", function(e){
+          console.log()
+        })
+        document.querySelector("form").addEventListener("submit", function(e){
+        let stop = true;
+        document.querySelectorAll("input[name='amenities']").forEach(ls=> ls.checked ? stop = false : null )
+        if(stop){
+          console.log("here dey run")
+          e.preventDefault()
+          alertMssg("your space should have atleast one amenity")
+        }else{
+          document.querySelector("form").submit()
+        }
       })
 
     </script>

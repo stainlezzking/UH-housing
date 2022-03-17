@@ -1,8 +1,9 @@
 
 const express = require("express")
 const flash = require("express-flash")
-const { USC } = require("./db")
-let { upload,multer } = require("./multerSetup")
+const fs = require("fs")
+const { USC, IMG , SPC} = require("./db")
+let { UserRoomateuploadMiddleWare } = require("./multerSetup")
 const router = express.Router()
 
 router.use(express.urlencoded({extended : true}))
@@ -14,7 +15,6 @@ router.use(function(req,res,next){
 })
 router.use(flash())
 
-upload = upload.array("pictures", 5)
 
 router.post("/changeDetails", function(req,res){
     console.log(req.body)
@@ -35,28 +35,43 @@ router.post("/changeDetails", function(req,res){
         return  res.redirect("/profile")
     }
 })
+router.post("/postSpace",UserRoomateuploadMiddleWare, async function(req,res){
+  //   req.body contains [Object : null prototype ]
+    req.body = JSON.parse(JSON.stringify(req.body))
+    // if one amenities is selected, will convert it to array 
+    Array.isArray(req.body.amenities) && req.body.amenities ? null : req.body.amenities = req.body.amenities.split()
+    req.body.user = req.user.username ;
+    req.body.type = "roomate"
+    const images =  req.files.map(image=> {
+        image.blob = fs.readFileSync(image.path)
+         return image
+     })
+    IMG.create({Picturepost : images})
 
-router.post("/postSpace", function(req,res){
-    upload(req,res, function(err){
-        if (err instanceof multer.MulterError) {
-            console.log("an error occured in multer")
-            req.flash("error", err.message)
+    .then((data)=>{
+        // have a function that will unlink files everytime an error occurs
+        req.body.images = JSON.parse(JSON.stringify(data._id))
+        SPC.create(req.body)
+        .then(()=> {
+            req.flash("error", "your space has been added has been successfully uploaded")
+              return res.redirect("/postSpace")
+        })
+        .catch(err=> {
+            console.log("an  error occured trying t0 save your files", err)
+            req.flash("error", "there was an error saving your file, please report this to us")
+            // redirect them to the details of the space
             return res.redirect("/postSpace")
-          } else if (err) {
-            // An unknown error occurred when uploading.
-            req.flash("error", "an error occured trying to upload your file")
-            console.log(" error occured while uploading", err)
-           return res.redirect("/postSpace")
-          }
-          console.log("successfully uploaded that sht")
-          req.flash("error", "your space has been added has been successfully uploaded")
-          console.log(req.body)
-        //   redirect them to the details of the space
-          return res.redirect("/postSpace")
-        //   BEFORE YOU UPLOAD THIS IMAGE TO S3 BUCKET, MAKE SURE THE USER EXIST B4 SOME1 USES SOMETHING LIKE POSTMAN
-        // INFACT ADD ISAUTHENTIFICATED FUNTION TO ALL POST ROUTES
+        })
     })
+    .catch(err=> {
+        console.log("an  error occured trying tosave your files", err)
+        req.flash("error", "there was an error saving your file, please report this to us")
+        return res.redirect("/postSpace")
+    })
+
 })
+
+
 
 module.exports = router
 

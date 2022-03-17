@@ -17,7 +17,7 @@ function fileFilter (req, file, cb) {
     filename: function (req, file, cb) {
         // i can prepend the user ID on the image, so when ever ever i can get the user
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null,  uniqueSuffix+ "-" + path.extname(file.originalname))
+      cb(null, JSON.parse(JSON.stringify(req.user._id)) + "-" +  uniqueSuffix+ "-" +  path.extname(file.originalname))
     }
   })
 
@@ -26,5 +26,19 @@ const limits = {
 }
   const upload = multer({ storage,limits, fileFilter})
 
-
-  module.exports = {upload, multer}
+  const UserRoomateuploadMiddleWare = function(req,res, next){
+    return upload.array("pictures", 5)(req,res, function(err){
+        if (err instanceof multer.MulterError) {
+            console.log("an error occured in multer")
+            req.flash("error", err.message)
+            return res.redirect("/postSpace")
+          } else if (err) {
+            // An unknown error occurred when uploading.
+            req.flash("error", "an error occured trying to upload your file")
+            console.log(" error occured while uploading", err)
+           return res.redirect("/postSpace")
+          }
+         return next()
+    })
+}
+  module.exports = {multer, UserRoomateuploadMiddleWare}

@@ -140,12 +140,10 @@ app.get("/agent/uploadRoom", (req,res)=>{
     res.render("post-room")
 })
 app.get("/roomspace", (req,res)=>{
-    // delete the filter search select botton for either room or roomate, since this page is room
     res.render("FindRoom")
 })
 
 app.get("/roomateSpace", (req,res)=>{
-    // delete the filter search select botton for either room or roomate, since this page is room
     res.render("findRoomMate")
 })
 

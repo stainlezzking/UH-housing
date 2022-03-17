@@ -6,17 +6,17 @@ mongoose.connect("mongodb://localhost:27017/UH", function(err, data){
     console.log("DB connected successfully")
 })
 
-const RoomateSpace = new mongoose.Schema({
+const Space = new mongoose.Schema({
     name : String,
     number : String,
-    user: String,
+    user: String, 
+    type : String,
     lodgeName : String,
     images : String,
     price : Number,
     junction : String,
     location : String,
     amenities : [String],
-    section : [String],
     description : String,
     Available : {type : Boolean, default : true},
     show : {type : Boolean, default : true}
@@ -28,12 +28,12 @@ const RoomateSpace = new mongoose.Schema({
 // maybe use another server to be serving up images as blob, reduce workload
 const images = new mongoose.Schema({
     Picturepost : [{
+        filename: String,
         blob : Buffer,
-        mimeType : String,
+        mimetype : String,
         show : {type : Boolean, default : true},
-        building : {type : Boolean, default: false}
     }]
-})
+}, {timestamps: true})
 
 const user = new mongoose.Schema({
     name :{
@@ -84,8 +84,10 @@ const user = new mongoose.Schema({
 })
 
 
-
 const USC = mongoose.model("User", user)
+const IMG = mongoose.model("images", images)
+const SPC = mongoose.model("spaces", Space)
+
 
 const registerUser = async function(req,res,next){
     // make sure that all datas are filled
@@ -122,6 +124,8 @@ const registerUser = async function(req,res,next){
 
 module.exports = {
     USC,
-    registerUser
+    registerUser,
+    IMG,
+    SPC
 }
 
