@@ -39,9 +39,11 @@ app.use(passport.session())
 app.use(function(req,res,next){
     if(req.isAuthenticated()){
        res.locals.user = req.user
+       req.locals.url = req.url
        next()
     }else{
         res.locals.user = null
+        res.locals.url = req.url
         next()
     }
 })
@@ -191,10 +193,11 @@ app.get("*", function(req,res){
 
 
 
-// ADD ACTIVE ON NAVBAR
+// ADD ACTIVE ON NAVBAR --
 // POSTED ROUTES
+// PRODUCT PAGE
 // FAVOURITE ROUTE
-// UPLOAD ROOMATE {USER}
+// UPLOAD ROOMATE {USER} --
 // UPLOAD ROOM {AGENT}
 // UPLOAD ROOMATE {AGENT} 
 // MAKE USER AGENT {ADMIN}//later on
