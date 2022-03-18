@@ -5,6 +5,8 @@ const fs = require("fs")
 const { USC, IMG , SPC} = require("./db")
 let { UserRoomateuploadMiddleWare } = require("./multerSetup")
 const router = express.Router()
+const crypto = require("crypto")
+
 
 router.use(express.urlencoded({extended : true}))
 router.use(function(req,res,next){
@@ -37,16 +39,19 @@ router.post("/changeDetails", function(req,res){
 })
 router.post("/postSpace",UserRoomateuploadMiddleWare, async function(req,res){
   //   req.body contains [Object : null prototype ]
+  let prefix = crypto.randomBytes(12).toString("hex") ;
     req.body = JSON.parse(JSON.stringify(req.body))
     // if one amenities is selected, will convert it to array 
     Array.isArray(req.body.amenities) && req.body.amenities ? null : req.body.amenities = req.body.amenities.split()
     req.body.user = req.user.username ;
     req.body.type = "roomate"
     const images =  req.files.map(image=> {
+        // putting this prefix in that multer filename fnx will generate diff prefix for each image
+        image.filename = prefix +"-"+ image.filename ;
         image.blob = fs.readFileSync(image.path)
          return image
      })
-    IMG.create({Picturepost : images, prefix : req.files[0].filename.split("-")[0]})
+    IMG.create({Picturepost : images, prefix})
 
     .then((data)=>{
         // have a function that will unlink files everytime an error occurs

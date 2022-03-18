@@ -6,6 +6,7 @@ const flash = require("express-flash")
 const localStrategy = require("passport-local").Strategy
 const postingRoutes = require("./modules/posting_routes")
 const fs = require("fs")
+const {Readable} = require("stream")
 
 
 
@@ -154,20 +155,30 @@ app.get("/agent/uploadRoomate", (req,res)=>{
 })
 app.get("/images/:url", function(req,res){
     let url = req.params.url.split("-")
-    console.log(url)
+//     console.log(url)
+//     //  so only readStreams can be sent back to image tags
+//     // so i'll make my buffer readable and then send back to img
+
     IMG.findOne({prefix : url[0]}, function(err,data){
+        console.log(req.params.url)
         if(data){
             let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
-            // res.send("<h2> hello there </h2>")
             let html = `
             <img src="data:${pic.mimetype};base64,${Buffer.from(pic.blob).toString("base64")}" >`
             res.send(html)
+            // res.send(`data:${pic.mimetype};base64,${Buffer.from(pic.blob).toString("base64")}`)
             return res.end()
         }else{
             res.send("404, no file found")
         }
 
     })
+//     fs.readFile(__dirname +"/uploads/5155c9001ac535b110617267491685913-1647584315612-622e5577bc8c6286c715ddf3-.jpg",
+//     function(err,data){
+//         // fs.createReadStream(data)
+//         // .pipe(res)
+//         Readable.from(data.toString("base64"))
+//     })
     
 })
 
