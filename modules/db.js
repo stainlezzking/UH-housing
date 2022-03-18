@@ -12,7 +12,7 @@ const Space = new mongoose.Schema({
     user: String, 
     type : String,
     lodgeName : String,
-    images : String,
+    images : [String],
     price : Number,
     junction : String,
     location : String,
@@ -27,11 +27,13 @@ const Space = new mongoose.Schema({
 
 // maybe use another server to be serving up images as blob, reduce workload
 const images = new mongoose.Schema({
+    prefix : String,
     Picturepost : [{
         filename: String,
         blob : Buffer,
         mimetype : String,
         show : {type : Boolean, default : true},
+        building : {type : Boolean, default : false}
     }]
 }, {timestamps: true})
 

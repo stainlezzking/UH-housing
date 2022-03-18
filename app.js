@@ -5,10 +5,12 @@ const session = require("express-session")
 const flash = require("express-flash")
 const localStrategy = require("passport-local").Strategy
 const postingRoutes = require("./modules/posting_routes")
+const fs = require("fs")
+
 
 
 // local modules
-const {USC,registerUser} = require("./modules/db")
+const {USC, IMG, registerUser} = require("./modules/db")
 
 
 const app = express()
@@ -150,7 +152,24 @@ app.get("/roomateSpace", (req,res)=>{
 app.get("/agent/uploadRoomate", (req,res)=>{
     res.render("agent-upload-roomate")
 })
+app.get("/images/:url", function(req,res){
+    let url = req.params.url.split("-")
+    console.log(url)
+    IMG.findOne({prefix : url[0]}, function(err,data){
+        if(data){
+            let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
+            // res.send("<h2> hello there </h2>")
+            let html = `
+            <img src="data:${pic.mimetype};base64,${Buffer.from(pic.blob).toString("base64")}" >`
+            res.send(html)
+            return res.end()
+        }else{
+            res.send("404, no file found")
+        }
 
+    })
+    
+})
 
 // posting routes 
 app.use(postingRoutes)
@@ -158,6 +177,8 @@ app.use(postingRoutes)
 app.get("*", function(req,res){
     res.send("redirect this later t0 404 page or the home page")
 })
+
+
 
 // ADD ACTIVE ON NAVBAR
 // POSTED ROUTES

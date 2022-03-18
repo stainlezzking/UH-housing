@@ -46,7 +46,7 @@ router.post("/postSpace",UserRoomateuploadMiddleWare, async function(req,res){
         image.blob = fs.readFileSync(image.path)
          return image
      })
-    IMG.create({Picturepost : images})
+    IMG.create({Picturepost : images, prefix : req.files[0].filename.split("-")[0]})
 
     .then((data)=>{
         // have a function that will unlink files everytime an error occurs
