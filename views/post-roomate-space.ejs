@@ -137,7 +137,7 @@ textarea::placeholder{
     <h3 class="title text-center mt-5 mb-4" id="title"> POST ROOMATE SPACE</h3>
 
     <div class="container form_container">
-        <form class="postRoom_form" method="POST" enctype="multipart/form-data">
+        <form class="postRoom_form" method="POST" action="/uploadRoomate" enctype="multipart/form-data">
             <div class="input-group mb-3">
                 <label for="inputGroupFile01" class="d-block mb-2 w-100"> images of the room (3-5) </label>
                 <input type="file" class="form-control" name="pictures" id="inputGroupFile01" required multiple accept="image/*" >
@@ -203,6 +203,17 @@ textarea::placeholder{
                           </span>
                         </div>
                       </article>
+                      
+                      <article class="feature6">
+                        <input type="checkbox"  name="amenities" value="well" id="feature6"/>
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                          well
+                          </span>
+                        </div>
+                      </article>
 
                       <article class="feature4">
                         <input type="checkbox"  name="amenities" value="toilet & Bathroom"  id="feature10" />
@@ -226,16 +237,6 @@ textarea::placeholder{
                           </div>
                         </article>
 
-                        <article class="feature6">
-                          <input type="checkbox"  name="amenities" value="well" id="feature6"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                            well
-                            </span>
-                          </div>
-                        </article>
                         <article class="featur07">
                           <input type="radio" name="amenities" value="prepaid-Meter" id="featur07"/>
                           <div>

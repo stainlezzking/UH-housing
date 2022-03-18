@@ -39,7 +39,7 @@ app.use(passport.session())
 app.use(function(req,res,next){
     if(req.isAuthenticated()){
        res.locals.user = req.user
-       req.locals.url = req.url
+       res.locals.url = req.url
        next()
     }else{
         res.locals.user = null
@@ -101,6 +101,14 @@ app.get("/home", (req, res)=>{
     res.render("home")
 })
 
+app.get("/roomspace", (req,res)=>{
+    res.render("FindRoom")
+})
+
+app.get("/roomateSpace", (req,res)=>{
+    res.render("findRoomMate")
+})
+
 // make /space something or redirect to somewhere maybe home page
 app.get("/space/:id", (req,res)=>{
     res.render("details")
@@ -138,23 +146,14 @@ app.get("/logout", function(req,res){
 
 // there should be a page for create space whre users can chooose if its 
 // roomate space or there room they want to sell
-app.get("/postSpace",isAuthMiddleWare, (req,res)=>{
-    res.render("user-post-roomate-space")
+app.get("/uploadRoomate",isAuthMiddleWare, (req,res)=>{
+    res.render("post-roomate-space")
 })
-app.get("/agent/uploadRoom", (req,res)=>{
+
+app.get("/agent/uploadRoom",isAuthMiddleWare, (req,res)=>{
     res.render("post-room")
 })
-app.get("/roomspace", (req,res)=>{
-    res.render("FindRoom")
-})
 
-app.get("/roomateSpace", (req,res)=>{
-    res.render("findRoomMate")
-})
-
-app.get("/agent/uploadRoomate", (req,res)=>{
-    res.render("agent-upload-roomate")
-})
 app.get("/images/:url", function(req,res){
     let url = req.params.url.split("-")
 //     console.log(url)

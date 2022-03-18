@@ -12,7 +12,7 @@ const Space = new mongoose.Schema({
     user: String, 
     type : String,
     lodgeName : String,
-    images : [String],
+    imagesID : String,
     price : Number,
     junction : String,
     location : String,

@@ -37,7 +37,7 @@ router.post("/changeDetails", function(req,res){
         return  res.redirect("/profile")
     }
 })
-router.post("/postSpace",UserRoomateuploadMiddleWare, async function(req,res){
+router.post("/uploadRoomate",UserRoomateuploadMiddleWare, async function(req,res){
   //   req.body contains [Object : null prototype ]
   let prefix = crypto.randomBytes(12).toString("hex") ;
     req.body = JSON.parse(JSON.stringify(req.body))
@@ -55,23 +55,23 @@ router.post("/postSpace",UserRoomateuploadMiddleWare, async function(req,res){
 
     .then((data)=>{
         // have a function that will unlink files everytime an error occurs
-        req.body.images = JSON.parse(JSON.stringify(data._id))
+        req.body.imagesID = JSON.parse(JSON.stringify(data._id))
         SPC.create(req.body)
         .then(()=> {
             req.flash("error", "your space has been added has been successfully uploaded")
-              return res.redirect("/postSpace")
+              return res.redirect("/uploadRoomate")
         })
         .catch(err=> {
             console.log("an  error occured trying t0 save your files", err)
             req.flash("error", "there was an error saving your file, please report this to us")
             // redirect them to the details of the space
-            return res.redirect("/postSpace")
+            return res.redirect("/uploadRoomate")
         })
     })
     .catch(err=> {
         console.log("an  error occured trying tosave your files", err)
         req.flash("error", "there was an error saving your file, please report this to us")
-        return res.redirect("/postSpace")
+        return res.redirect("/uploadRoomate")
     })
 
 })
