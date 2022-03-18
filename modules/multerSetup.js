@@ -1,7 +1,6 @@
 
 const multer = require("multer")
 const path = require("path")
-const crypto = require("crypto")
 
 function fileFilter (req, file, cb) {
     if(!file.mimetype.includes('image')){
@@ -18,7 +17,7 @@ function fileFilter (req, file, cb) {
     filename: function (req, file, cb) {
         // i can prepend the user ID on the image, so when ever ever i can get the user
       const uniqueSuffix =  Math.round(Math.random() * 1E9) + '-' + Date.now() 
-      cb(null, crypto.randomBytes(12).toString("hex") + uniqueSuffix + "-" + JSON.parse(JSON.stringify(req.user._id)) +  path.extname(file.originalname))
+      cb(null,  uniqueSuffix + "-" + JSON.parse(JSON.stringify(req.user._id)) +  path.extname(file.originalname))
     }
   })
 
