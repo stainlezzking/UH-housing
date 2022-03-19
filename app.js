@@ -161,7 +161,6 @@ app.get("/uploadRoom",isAuthMiddleWare, (req,res)=>{
 
 app.get("/images/:url", function(req,res){
     let url = req.params.url.split("-")
-//     console.log(url)
 //     //  so only readStreams can be sent back to image tags
 //     // so i'll make my buffer readable and then send back to img
 
@@ -169,24 +168,27 @@ app.get("/images/:url", function(req,res){
         console.log(req.params.url)
         if(data){
             let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
-            let html = `
-            <img src="data:${pic.mimetype};base64,${Buffer.from(pic.blob).toString("base64")}" >`
-            res.send(html)
-            // res.send(`data:${pic.mimetype};base64,${Buffer.from(pic.blob).toString("base64")}`)
-            return res.end()
+            if(pic){
+                // only readable streams can be piped, and to the best 
+                // of my knowledge, streaminig is the only way of responding 
+                // to image tags aside passing in blobs into the tag...
+                Readable.from(pic.blob).pipe(res)
+            }else{
+                res.send(404,`
+                    <h2>  404, IMAGE NOT FOUND </h2>  
+                    `)
+            }
         }else{
-            res.send("404, no file found")
+            res.send(404,`
+                <h2>  404, IMAGE NOT FOUND </h2>  
+                `)
         }
 
     })
-//     fs.readFile(__dirname +"/uploads/5155c9001ac535b110617267491685913-1647584315612-622e5577bc8c6286c715ddf3-.jpg",
-//     function(err,data){
-//         // fs.createReadStream(data)
-//         // .pipe(res)
-//         Readable.from(data.toString("base64"))
-//     })
     
 })
+
+IMG.findOne({}).then(data=> console.log(data.Picturepost[2].filename))
 
 // posting routes 
 app.use(postingRoutes)
@@ -196,15 +198,17 @@ app.get("*", function(req,res){
 })
 
 
-// ADD BURGER ANIMATION ON ALL PAGE
+// ADD BURGER ANIMATION ON ALL PAGE --
 // INDEX SPACE.TYPE
+// INDEX USER AS AGENT
+// 404 PAGE
 // ADD ACTIVE ON NAVBAR -- 
-// POSTED ROUTES
+// POSTED ROUTES --
 // PRODUCT PAGE
 // FAVOURITE ROUTE
 // UPLOAD ROOMATE {USER} --
-// UPLOAD ROOM {AGENT}
-// UPLOAD ROOMATE {AGENT}   --
+// UPLOAD ROOM {AGENT} --
+// UPLOAD ROOMATE {AGENT} --
 // EDITING SOACE {AGENT}
 // DELETING POST {BOSS}
 // TEM HIDING POST {AGENT} 
