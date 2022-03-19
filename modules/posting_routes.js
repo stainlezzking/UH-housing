@@ -88,7 +88,7 @@ function(req,res){
         req.body = JSON.parse(JSON.stringify(req.body))
         req.body.price = {initial : req.body.initial, sub : req.body.sub}
         Array.isArray(req.body.amenities) && req.body.amenities ? null : req.body.amenities = req.body.amenities.split()
-        req.body.poster = req.user.username ;
+        req.body.poster = req.user.username ; 
         req.body.type = "room"
         const images = req.files.pictures.map(image=> {
             // putting this prefix in that multer filename fnx will generate diff prefix for each image
@@ -96,13 +96,14 @@ function(req,res){
             image.blob = fs.readFileSync(image.path)
              return image
          })
-         const lodgeBuilding = req.files.pictures.map(image=> {
+         const lodgeBuilding = req.files.lodgeBuilding.map(image=> {
             // putting this prefix in that multer filename fnx will generate diff prefix for each image
             image.filename = prefix +"-"+ image.filename ;
             image.building = true
             image.blob = fs.readFileSync(image.path)
              return image
          })
+         console.log("lodgeBuilding length is", lodgeBuilding.length)
         IMG.create({Picturepost : images.concat(lodgeBuilding), prefix})
         .then(data=>{
             req.body.imagesID = JSON.parse(JSON.stringify(data._id))  

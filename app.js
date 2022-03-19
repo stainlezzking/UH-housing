@@ -188,7 +188,6 @@ app.get("/images/:url", function(req,res){
     
 })
 
-IMG.findOne({}).then(data=> console.log(data.Picturepost[2].filename))
 
 // posting routes 
 app.use(postingRoutes)
