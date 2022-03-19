@@ -65,6 +65,7 @@
     height: 3px;
     position: relative;
     margin: 10px 0;
+    transition-duration: .6s;
   }
   #menu-toggle #hamburger span:nth-child(1) {
     transition-delay: 0.5s;
@@ -114,12 +115,12 @@
   #menu-toggle.open #cross span:nth-child(1) {
     height: 90%;
     transition-delay: 0.625s;
-    background-color: rgb(0, 0, 0, .6);
+    background-color: #566973;
   }
   #menu-toggle.open #cross span:nth-child(2) {
     width:90%;
     transition-delay: 0.375s;
-    background-color: rgb(0, 0, 0, .6);
+    background-color: #566973;
   }
 
   /* remove border from button during focus */
@@ -206,5 +207,10 @@
           </nav>
           <script>
               document.querySelector(`li.nav-item a[href='<%=url%>']`).classList.add("active")
+              
+              document.getElementById("menu-toggle").addEventListener("click",
+              function(e){
+                document.getElementById("menu-toggle").classList.toggle("open")
+              })
           </script>
     </div>
