@@ -86,173 +86,235 @@ textarea::placeholder{
   .select_tag_cover input[type=checkbox]:checked ~ div {
     background-color: #50bcf2;
   }
+  .select_tag_cover input[type=radio]:checked ~ div {
+    background-color: #50bcf2;
+  }
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(1) {
     display: none;
 }
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(2) {
     display: inline;
 }
+.personal-modal{
+    padding: 1rem ;
+    width: 80%;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: .7em;
+    min-width: 300px;
+    max-width: 500px;
+    transition: all .6s ease-in;
+    opacity: 1;
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    border-radius: 5px ;
+    z-index: 200;
+  }
+  .show{
+    opacity: 1;
+    top: 100px;
+  }
     </style>
 </head>
 <body>
    <%- include("./partials/navbar.ejs") -%>
     <!-- banner section -->
+    
+    <!-- error model -->
+  <% if(messages.error){ %>
+    <div class="personal-modal show" id="myModal" tabindex="-1">
+      <%= messages.error %>
+    </div> 
+    <script>
+      setTimeout(()=>{
+        document.getElementById("myModal").classList.remove("show")
+      },2500)
+    </script>
+  <% } %>
     <h3 class="title text-center mt-5 mb-4"> UPLOAD ROOM </h3>
 
     <div class="container form_container">
-        <form class="postRoom_form" >
+        <form class="postRoom_form" method="POST" enctype="multipart/form-data"> 
             <div class="input-group mb-4">
                 <label for="inputGroupFile01" class="d-block mb-2 w-100"> images of the room</label>
-                <input type="file" class="form-control" id="inputGroupFile01" multiple accept="image/*" required>
+                <input type="file" class="form-control" id="inputGroupFile01" name="pictures" multiple accept="image/*" required>
               </div>
               <label class="mb-2"> Price of lodge</label>
               <div>
                 <div class="input-group mb-3 me-1">
                     <label class="input-group-text" for="initial">initial</label>
-                    <input type="number" class="form-control " id="initial" name="price_initial" required>
+                    <input type="Number" class="form-control " id="initial" name="initial" required>
                   </div>
                   <div class="input-group mb-3">
                     <label class="input-group-text" for="sub">sub</label>
-                    <input type="number" class="form-control" id="sub" name="price_sub" required>
+                    <input type="Number" class="form-control" id="sub" name="sub" required>
                   </div>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile07" class="d-block mb-2 w-100"> Located around</label>
-                <input type="text" class="form-control" id="inputGroupFile07" placeholder="just a place around there but far away" required>
+                <input type="text" class="form-control" name="junction" id="inputGroupFile07" placeholder="closest popular junction arounds" required>
               </div>
-              <div class="input-group mb-4">
-                <label for="inputGroupFile13" class="d-block mb-2 w-100"> how far from school</label>
-                <input type="text" class="form-control" id="inputGroupFile13" placeholder="how many kilometers from school" required>
+              <div class="input-group pt-3">
+                <div class="input-group mb-3">
+                  <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> FLAT OR SELF-CONTAIN</h3>
+                  <div class="select_tag_cover">
+                      <article class="featur07">
+                        <input type="radio" name="setting" value="FLAT-APARTMENT" id="featur09"/>
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                            FLAT-APARTMENT
+                          </span>
+                        </div>
+                      </article>
+                      <article class="feature8">
+                        <input type="radio" name="setting" value="SELF-CONTAIN" id="feature10"/>
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                          SELF-CONTAIN
+                          </span>
+                        </div>
+                      </article>
+                </div>
               </div>
               <div class="input-group pt-3">
                 <div class="input-group mb-3">
                   <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> Amenities</h3>
                   <div class="select_tag_cover">
-                      <article class="feature1">
-                        <input type="checkbox" id="feature1"/>
-                        <div>
-                          <i class="fa-solid fa-plus"></i>
-                          <i class="fa-solid fa-check"></i>
-                          <span class="ps-1">
+                    <article class="feature1">
+                      <input type="checkbox" name="amenities" value="running water"  id="feature1"/>
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
                           running water
-                          </span>
-                        </div>
-                      </article>
-                
-                      <article class="feature2">
-                        <input type="checkbox" id="feature2"/>
+                        </span>
+                      </div>
+                    </article>
+            
+                    <article class="feature3">
+                      <input type="checkbox" name="amenities" value="solar" id="feature3"/>
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
+                         solar
+                        </span>
+                      </div>
+                    </article>
+                    
+                    <article class="feature4">
+                      <input type="checkbox"  name="amenities" value="kitchen"  id="feature11" />
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
+                          kitchen
+                        </span>
+                      </div>
+                    </article>
+
+                    
+                    <article class="feature4">
+                      <input type="checkbox"  name="amenities" value="Room"  id="feature9" checked/>
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
+                          Room
+                        </span>
+                      </div>
+                    </article>
+                    
+                    <article class="feature6">
+                      <input type="checkbox"  name="amenities" value="well" id="feature6"/>
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
+                        well
+                        </span>
+                      </div>
+                    </article>
+
+                    <article class="feature4">
+                      <input type="checkbox"  name="amenities" value="toilet & Bathroom"  id="feature10" />
+                      <div>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
+                        <span class="ps-1">
+                          toilet&Bathroom
+                        </span>
+                      </div>
+                    </article>
+
+                    <article class="feature5">
+                        <input type="checkbox" name="amenities" value="corridor" id="feature5" />
                         <div>
-                          <i class="fa-solid fa-plus"></i>
-                          <i class="fa-solid fa-check"></i>
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check"></i>
                           <span class="ps-1">
-                           light
-                          </span>
-                        </div>
-                      </article>
-                      
-                      <article class="feature3">
-                        <input type="checkbox" id="feature3"/>
-                        <div>
-                          <i class="fa-solid fa-plus"></i>
-                          <i class="fa-solid fa-check"></i>
-                          <span class="ps-1">
-                           solar
-                          </span>
-                        </div>
-                      </article>
-                      
-                      <article class="feature4">
-                        <input type="checkbox" id="feature4" />
-                        <div>
-                          <i class="fa-solid fa-plus"></i>
-                          <i class="fa-solid fa-check"></i>
-                          <span class="ps-1">
-                            kitchen
+                            corridor
                           </span>
                         </div>
                       </article>
 
-                      <article class="feature5">
-                          <input type="checkbox" id="feature5" />
-                          <div>
+                      <article class="featur07">
+                        <input type="radio" name="amenities" value="prepaid-Meter" id="featur07"/>
+                        <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                              corridor
-                            </span>
-                          </div>
-                        </article>
-
-                        <article class="feature6">
-                          <input type="checkbox" id="feature6"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                            well
-                            </span>
-                          </div>
-                        </article>
-                        <article class="featur07">
-                          <input type="checkbox" id="featur07"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                              Prepaid-Meter
-                            </span>
-                          </div>
-                        </article>
-                        <article class="feature8">
-                          <input type="checkbox" id="feature8"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                            Meter
-                            </span>
-                          </div>
-                        </article>
-                        
-                        <article class="feature9">
-                          <input type="checkbox" id="feature9"/>
-                          <div>
-                            <i class="fa-solid fa-plus"></i>
-                            <i class="fa-solid fa-check"></i>
-                            <span class="ps-1">
-                            solar
-                            </span>
-                          </div>
-                        </article>
-                      <!-- give sectors part of the select element like the same name and filter  them into the right db space/prop -->
-                    </div>
+                          <span class="ps-1">
+                            Prepaid-Meter
+                          </span>
+                        </div>
+                      </article>
+                      <article class="feature8">
+                        <input type="radio" name="amenities" value="Meter" id="feature8"/>
+                        <div>
+                          <i class="fa-solid fa-plus"></i>
+                          <i class="fa-solid fa-check"></i>
+                          <span class="ps-1">
+                          Meter
+                          </span>
+                        </div>
+                      </article>
+                    <!-- give sectors part of the select element like the same name and filter  them into the right db space/prop -->
+                </div>
               </div>
               <div class="input-group mb-5">
                 <label for="description" class="d-block mb-2"> Details</label>
-                <textarea name="description"  class="d-block w-100 p-2" placeholder="leave more details about the lodge" required></textarea>
+                <textarea name="description"  class="d-block w-100 p-2" placeholder="leave more details about the lodge like number of rooms or anything worth mentioning..." required></textarea>
               </div>
               <!-- agen part of the form -->
               <h2 class="h3 text-center"> Agent's Details</h2>
               <div class="input-group mb-4">
                 <label for="inputGroupFile10" class="d-block mb-2 w-100"> Lodge Name</label>
-                <input type="numer" class="form-control" id="inputGroupFile10" required>
+                <input type="numer" class="form-control" id="inputGroupFile10" name="lodgeName" required>
               </div> 
               <div class="input-group mb-4">
                 <label for="inputGroupFile02" class="d-block mb-2 w-100"> Lodge building</label>
-                <input type="file" class="form-control" id="inputGroupFile02" required>
+                <input type="file" class="form-control" id="inputGroupFile02" name="lodgeBuilding" multiple required>
                 <label for="inputGroupFile02" class="d-block mb-2 w-100"> make sure the picture is recognizable</label>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Caretakers name</label>
-                <input type="text" class="form-control" id="inputGroupFile08" required>
+                <input type="text" class="form-control" id="inputGroupFile08" name="careTname" required>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile09" class="d-block mb-2 w-100"> Caretaker's number</label>
-                <input type="number" class="form-control" id="inputGroupFile09" required>
+                <input type="Number" class="form-control" id="inputGroupFile09" name="careTnumber" required>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Lodge full location</label>
-                <textarea name="location"  class="d-block w-100 p-2" placeholder="describe location from ifite school gate" required></textarea>
+                <textarea   class="d-block w-100 p-2" name="location" placeholder="describe location from ifite school gate" required></textarea>
               </div>
               <!-- all this admin section should have like bem format with admin__ on the name -->
               <button type="submit" class="btn btn-outline-info mx-auto d-block"> Post</button>
@@ -263,17 +325,46 @@ textarea::placeholder{
    <%- include("./partials/footer.ejs") -%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
-      var gb ;
-      document.getElementById("inputGroupFile01").addEventListener("change", function(event){
+      let mssg = document.createElement("div");
+         mssg.className = "personal-modal show"
+         mssg.setAttribute("id","myamenities" )
+        var alertMssg = function(msg){
+          mssg.innerHTML = msg
+          document.getElementsByTagName("body")[0].insertBefore(mssg,document.getElementById("title"))
+          document.getElementById("myamenities").style.top = document.documentElement.scrollTop + 100 + "px"
+
+          setTimeout(()=>{
+          document.getElementById("myamenities").classList.remove("show")
+          },2500)
+          setTimeout(()=> document.querySelector("body").removeChild(document.getElementById("myamenities")), 2500)
+        }
+
+      document.getElementById("inputGroupFile01")
+      const fileValidCheck = function(element, min, max){
+        element.addEventListener("change", function(event){
         console.log(event)
-          if(event.target.files.length < 3 || event.target.files.length >5){
-            alert("images of the room should be between 3 and 5, remember not to upload images that can be used to recognize the lodge here")
-            document.getElementById("inputGroupFile01").value = ""
+          if(event.target.files.length < min || event.target.files.length > max){
+            alertMssg(`images of the room should be between ${min} and ${max}, remember not to upload images that can be used to recognize the lodge here`)
+            element.value = ""
           }
       })
+      }
+      fileValidCheck(document.getElementById("inputGroupFile01"), 3, 5)
+      fileValidCheck(document.getElementById("inputGroupFile02"), 1, 3)
+
 
       document.getElementById("inputGroupFile02").addEventListener("change", function(event){
           console.log(event.target.files)
+      })
+      document.querySelector("form").addEventListener("submit", function(e){
+        let stop = true;
+        document.querySelectorAll("input[name='amenities']").forEach(ls=> ls.checked ? stop = false : null )
+        if(stop){
+          e.preventDefault()
+          alertMssg("your space should have atleast one amenity")
+        }else{
+          document.querySelector("form").submit()
+        }
       })
     </script>
 </body>

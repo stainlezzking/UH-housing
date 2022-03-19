@@ -3,6 +3,7 @@ const multer = require("multer")
 const path = require("path")
 
 function fileFilter (req, file, cb) {
+  console.log(file)
     if(!file.mimetype.includes('image')){
         return  cb(new Error('file must be an image'), false)
       }
@@ -26,19 +27,22 @@ const limits = {
 }
   const upload = multer({ storage,limits, fileFilter})
 
-  const UserRoomateuploadMiddleWare = function(req,res, next){
-    return upload.array("pictures", 5)(req,res, function(err){
+  const uploadMiddleWare = function(route, passFields){
+    // as this function is returning a middleware it can act as a middleware
+  return function(req,res, next){
+    return upload.fields(passFields)(req,res, function(err){
         if (err instanceof multer.MulterError) {
             console.log("an error occured in multer")
             req.flash("error", err.message)
-            return res.redirect("/postSpace")
+            return res.redirect(route)
           } else if (err) {
             // An unknown error occurred when uploading.
             req.flash("error", "an error occured trying to upload your file")
             console.log(" error occured while uploading", err)
-           return res.redirect("/postSpace")
+           return res.redirect(route)
           }
          return next()
     })
 }
-  module.exports = {multer, UserRoomateuploadMiddleWare}
+  }
+  module.exports = {multer, uploadMiddleWare}

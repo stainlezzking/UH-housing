@@ -147,10 +147,15 @@ app.get("/logout", function(req,res){
 // there should be a page for create space whre users can chooose if its 
 // roomate space or there room they want to sell
 app.get("/uploadRoomate",isAuthMiddleWare, (req,res)=>{
-    res.render("post-roomate-space")
+    if(req.user.agent.level){
+        res.render("post-roomate-space")
+    }else{
+        res.writeHead(401, "apply for an agent to be able to access this page")
+        res.send("not authorized")
+    }
 })
 
-app.get("/agent/uploadRoom",isAuthMiddleWare, (req,res)=>{
+app.get("/uploadRoom",isAuthMiddleWare, (req,res)=>{
     res.render("post-room")
 })
 
@@ -191,14 +196,18 @@ app.get("*", function(req,res){
 })
 
 
-
-// ADD ACTIVE ON NAVBAR --
+// ADD BURGER ANIMATION ON ALL PAGE
+// INDEX SPACE.TYPE
+// ADD ACTIVE ON NAVBAR -- 
 // POSTED ROUTES
 // PRODUCT PAGE
 // FAVOURITE ROUTE
 // UPLOAD ROOMATE {USER} --
 // UPLOAD ROOM {AGENT}
-// UPLOAD ROOMATE {AGENT} 
+// UPLOAD ROOMATE {AGENT}   --
+// EDITING SOACE {AGENT}
+// DELETING POST {BOSS}
+// TEM HIDING POST {AGENT} 
 // MAKE USER AGENT {ADMIN}//later on
 
 app.listen(3000, ()=>{

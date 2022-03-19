@@ -9,7 +9,7 @@ mongoose.connect("mongodb://localhost:27017/UH", function(err, data){
 const Space = new mongoose.Schema({
     name : String,
     number : String,
-    user: String, 
+    poster: String, 
     type : String,
     lodgeName : String,
     imagesID : String,
@@ -18,12 +18,26 @@ const Space = new mongoose.Schema({
     location : String,
     amenities : [String],
     description : String,
+    careTname : String,
+    careTnum : Number,
+    price : {initial : Number, sub : Number},
     Available : {type : Boolean, default : true},
     show : {type : Boolean, default : true}
 },{
     minimize: false,
     timestamps : true,
 })
+
+// images
+// price - initial & sub
+// junction
+// amenities
+// description
+// lodgeName
+// image_building
+// caretakersName
+// caretakersNumber
+// location
 
 // maybe use another server to be serving up images as blob, reduce workload
 const images = new mongoose.Schema({

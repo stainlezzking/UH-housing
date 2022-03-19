@@ -311,14 +311,10 @@ textarea::placeholder{
             document.querySelector("input[type=file]").value = ""
           }
        })
-        window.addEventListener("scroll", function(e){
-          console.log()
-        })
         document.querySelector("form").addEventListener("submit", function(e){
         let stop = true;
         document.querySelectorAll("input[name='amenities']").forEach(ls=> ls.checked ? stop = false : null )
         if(stop){
-          console.log("here dey run")
           e.preventDefault()
           alertMssg("your space should have atleast one amenity")
         }else{
