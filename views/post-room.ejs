@@ -22,6 +22,7 @@
 }
 
 body{
+  background: linear-gradient(80deg, rgb(0, 173, 60, .6), rgb(60, 242, 249,.4));
   font-family: 'Carrois Gothic', sans-serif;
 }
 
@@ -163,7 +164,7 @@ textarea::placeholder{
                   <h3 class="mb-3 bg-secondary w-100 text-center text-white py-2"> FLAT OR SELF-CONTAIN</h3>
                   <div class="select_tag_cover">
                       <article class="featur07">
-                        <input type="radio" name="setting" value="FLAT-APARTMENT" id="featur09"/>
+                        <input type="radio" name="settings" value="FLAT-APARTMENT" id="featur09"/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -173,7 +174,7 @@ textarea::placeholder{
                         </div>
                       </article>
                       <article class="feature8">
-                        <input type="radio" name="setting" value="SELF-CONTAIN" id="feature10"/>
+                        <input type="radio" name="settings" value="SELF-CONTAIN" id="feature10"/>
                         <div>
                           <i class="fa-solid fa-plus"></i>
                           <i class="fa-solid fa-check"></i>
@@ -310,7 +311,7 @@ textarea::placeholder{
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile09" class="d-block mb-2 w-100"> Caretaker's number</label>
-                <input type="Number" class="form-control" id="inputGroupFile09" name="careTnumber" required>
+                <input type="Number" class="form-control" id="inputGroupFile09" name="careTnum" required>
               </div>
               <div class="input-group mb-4">
                 <label for="inputGroupFile08" class="d-block mb-2 w-100"> Lodge full location</label>
@@ -358,11 +359,17 @@ textarea::placeholder{
       })
       document.querySelector("form").addEventListener("submit", function(e){
         let stop = true;
+        let nope = true;
         document.querySelectorAll("input[name='amenities']").forEach(ls=> ls.checked ? stop = false : null )
+        document.querySelectorAll("input[name='settings']").forEach(ls=> ls.checked ? nope = false : null )
         if(stop){
           e.preventDefault()
           alertMssg("your space should have atleast one amenity")
         }else{
+          if(nope){
+            e.preventDefault()
+            return alertMssg("you shoulld check either a flat or self-contain")
+          }
           document.querySelector("form").submit()
         }
       })

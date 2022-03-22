@@ -8,15 +8,16 @@ mongoose.connect("mongodb://localhost:27017/UH", function(err, data){
 
 const Space = new mongoose.Schema({
     name : String,
+    sex : String,
     number : String,
     poster: String, 
-    type : String,
+    type :  String,
     lodgeName : String,
     imagesID : String,
-    price : Number,
     junction : String,
     location : String,
     amenities : [String],
+    settings : String,
     description : String,
     careTname : String,
     careTnum : Number,
@@ -80,7 +81,8 @@ const user = new mongoose.Schema({
     agent :{
         level : {
             type : Number,
-            default : 0
+            default : 0,
+            index : true
         }
         
     },
@@ -135,12 +137,36 @@ const registerUser = async function(req,res,next){
         return res.redirect("/register")    
     }
 }
-
-
+// SPC.findById("xbshbk")
+// .then(data=> {
+//     console.log(data)
+// }).catch(err=> console.log(err))
+const fetchSpace = function(req,res,next){
+    console.log(req.params.id)
+    SPC.findById(req.params.id)
+    .then((data)=>{
+        console.log(data)
+        if(data){
+           IMG.findOne({id : data.imagesID})
+            .then(image => {
+                res.locals.space = data
+                res.locals.images = image
+                    next()
+            })
+        }else{
+            res.send("can't find space 404 PAGE")
+            res.end()
+        }
+    }).catch(err=>{
+        console.log("error couldn't complete search for product", err)
+        res.send("an error occured")
+    })
+}
 module.exports = {
     USC,
     registerUser,
     IMG,
-    SPC
+    SPC, 
+    fetchSpace
 }
 

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details</title>
-    <link rel="shortcut icon" href="static/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/images/favicon.png" type="image/x-icon">
 
     <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/c8fd5239b9.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/c8fd5239b9.js" crossorigin="anonymous"></script> -->
      <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&display=swap" rel="stylesheet">
     <!-- ######## -->
@@ -111,6 +111,14 @@
         .initial-price::after{
             content: "Initial Payment";
         }
+        .all-price::after{
+            content: "Amount";
+            display: block;
+            margin-top: .3rem;
+            text-align: right;
+            font-size: small;
+            color: black;
+        }
         .sub-price::after{
             content: "Sub Price";
         }
@@ -119,11 +127,14 @@
         }
     </style>
 </head>
-<body >
+<body>
+    <% const imageForAll = images.Picturepost.filter(pic=> pic.show && !pic.building) %>
+    <% const imageForAgent = images.Picturepost.filter(pic=>  pic.building) %>
+    <% console.log(imageForAgent.length) %>
        <nav class=" container align-items-center d-flex justify-content-between py-2 bg-color-light">
            <div class="back_arrow">
                <a href="javascript:history.back()">
-                <i class="fa-solid fa-angle-left  text-white"></i>
+                <svg class="text-white" style="color" width="15" viewBox="0 0 256 512"><!--! Font Awesome Pro 6.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path class="text-white" d="M192 448c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l137.4 137.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448z"/></svg>
             </a>
            </div>
            <div class="nav-brand">
@@ -134,18 +145,11 @@
     <!-- make a little back arrow mark "<" floating on the image to go back page, make it have padding -->
     <div id="details_page_carousel" class="carousel first-carousel slide mx-auto mt-2" data-bs-ride="carousel">
         <div class="carousel-inner position-relative">
-          <div class="carousel-item active"  data-bs-toggle="modal"  aria-current="true" aria-label="Slide 1" data-bs-slide-to="0">
-            <img src="../static/dont_upload/room1.jpg" class="d-block img-fluid" alt="...">
-          </div>
-          <div class="carousel-item" data-bs-toggle="modal"  data-bs-slide-to="1">
-            <img src="../static/dont_upload/room2.jpg" class="d-block img-fluid" alt="...">
-          </div>
-          <div class="carousel-item" data-bs-toggle="modal"  data-bs-slide-to="2">
-            <img src="../static/dont_upload/room3.jpg" class="d-block img-fluid" alt="...">
-          </div>
-          <div class="carousel-item " data-bs-toggle="modal"  data-bs-slide-to="3">
-            <img src="../static/dont_upload/room4.jpg" class="d-block img-fluid" alt="...">
-          </div>
+           <% imageForAll.forEach((pic, index)=>{ %>
+                <div class="carousel-item"  data-bs-toggle="modal"  aria-current="true" aria-label="Slide 1" data-bs-slide-to="<%= index %>">
+                    <img src="/images/<%=pic.filename%>" class="d-block img-fluid" alt="images of an apartment on in awka">
+                  </div>
+           <% }) %>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#details_page_carousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -168,24 +172,16 @@
           <div class="modal-body d-flex align-items-center">
             <div id="pop_up_details_page_carousel" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="false">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#pop_up_details_page_carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#pop_up_details_page_carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#pop_up_details_page_carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    <button type="button" data-bs-target="#pop_up_details_page_carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                  </div>
+                    <% imageForAll.forEach((pic, index)=>{ %>
+                        <button type="button" data-bs-target="#pop_up_details_page_carousel" data-bs-slide-to="<% index %>"  aria-current="true" aria-label="Slide 1"></button>
+                        <% }) %>
+                </div>
                 <div class="carousel-inner position-relative">
-                  <div class="carousel-item active"  data-bs-toggle="modal" data-bs-target="#pop_up_details_page_carousel">
-                    <img src="../static/dont_upload/room1.jpg" class="d-block" alt="...">
-                  </div>
-                  <div class="carousel-item" data-bs-toggle="modal" data-bs-target="#pop_up_details_page_carousel">
-                    <img src="../static/dont_upload/room2.jpg" class="d-block" alt="...">
-                  </div>
-                  <div class="carousel-item" data-bs-toggle="modal" data-bs-target="#pop_up_details_page_carousel">
-                    <img src="../static/dont_upload/room3.jpg" class="d-block" alt="...">
-                  </div>
-                  <div class="carousel-item " data-bs-toggle="modal" data-bs-target="#pop_up_details_page_carousel">
-                    <img src="../static/dont_upload/room4.jpg" class="d-block" alt="...">
-                  </div>
+            <% imageForAll.forEach((pic, index)=>{ %>
+                <div class="carousel-item"  data-bs-toggle="modal" data-bs-target="#pop_up_details_page_carousel">
+                    <img src="/images/<%= pic.filename %>" class="d-block" alt="...">
+                  </div>       
+                <% }) %>
                 </div>
             </div>
         </div>
@@ -194,20 +190,32 @@
   </div>
 
 
-
+<% console.log(space.sex) %>
 <section class="details container mt-3 bg-color-light">
     <!-- apply that linear background here  -->
     <header class="d-flex justify-content-between py-2 flex-wrap ">
-        <h2> SELF-CONTAIN</h2>
-        <h2 class="fw-bold text-success initial-price">170,000</h2>
+      <%  if(space.type == "room"){ %>
+            <h2> <%= space.settings %></h2>
+            <h2 class="fw-bold text-success initial-price">
+                <%= space.price.initial.toLocaleString('en-US') %>
+            </h2>
+       <% }else{ %>
+            <h2> <%= space.sex.toUpperCase() %> ROOMMATE</h2>
+            <h2 class="fw-bold text-success all-price">
+                <%= space.price.initial.toLocaleString('en-US') %>
+            </h2>
+      <%  } %>
+
         <!-- <small class="d-block w-100 text-right h6"> initial payment</small> -->
 
     </header>
 
     <div  class="d-flex justify-content-between py-2 padded align-items-baseline flex-wrap">
-        <h4 > ID : BJE37CXu830 </h4>
+        <h5> ID : <small class="h6 d-block"><%= space._id %></small></h5>
         <!-- this input helps with copying the room ID -->
-        <h2 class="fw-bold text-success sub-price"> 140,000</h2>
+        <% if(space.type == "room") {%>
+            <h2 class="fw-bold text-success sub-price"> <%= space.price.sub.toLocaleString('en-US') %></h2>
+        <%}%>
     <!-- <small class="d-block w-100 ms-auto h6"> sub payments</small> -->
 
     </div>
@@ -220,67 +228,103 @@
     </div>
     <!-- ######## -->
 <hr>
-    <div class="apartment_details padded ">
-        <h2 
-        class="text-success"> Sections</h2>
-        <p>
-            kitchen, room,toilet, bathroon,corridor
-        </p>
-    </div>
-    <hr>
     <ul class="list-group">
-        <li class="list-group-item text-center h3 mb-3 text-success"> PROPERTIES</li>
-        <li class="list-group-item">Bore hole</li>
-        <li class="list-group-item">well</li>
-        <li class="list-group-item">Light</li>
-        <li class="list-group-item">Solar</li>
-        <li class="list-group-item">6 meters wide</li>
-        <li class="list-group-item">9 meters long</li>
-        <li class="list-group-item">Located around Miracle junction</li>
-        <li class="list-group-item">20km from the school gate</li>
+        <li class="list-group-item text-center h3 mb-3 text-success"> AMENITIES</li>
+        <% space.amenities.forEach(item=>{ %>
+            <li class="list-group-item"> <%= item %></li>
+       <% }) %>
+       <li class="list-group-item"> located around : <%= space.junction %></li>
+
     </ul>
     <p class="desription mb-3">
         <h3 class="text-center text-success"> More details</h3>
-            <!-- leave a lil space for description, to add more details about the lodge like if possibly the bathroom and toilet are seperate -->
-        Lorem ipsum dolor sit amet inventore voluptatem incidunt vero ratione molestias rem fuga consequuntur quos cum beatae provident nemo minima impedit? Inventore laudantium totam voluptate adipisci doloribus.
+        <%= space.description %>
     </p>
-    <footer>
+    <footer class="pb-4">
         <h3 class="text-center text-success">
             CONTACT
         </h3>
-       <p> if you would like to *sublet* this space or get more informations about it or know more about our policies </p>
-       <p> call or text us on whatsapp : </p>
-       <p> +234090...</p>
-       <p> <a href="https://wa.link/85v10z" class="text-decoration-none">
-        <i class="fa-brands fa-whatsapp text-success"></i>
-         open whatsapp</a>
-       </p>
-       <p> Copy the room ID, to referrence it to our agents </p>
-       <p class="text-danger"> Note  only use the numbers from our site to contact our agents, don't believe any impersonators, as we would not be held liable for any loss</p>
+      
+       <div class="d-flex justify-content-between mx-auto mb-2" style="max-width: 400px;">
+        <a href="tel:09036442093" style="max-width: 200px;" class="btn btn-info d-block text-decoration-none text-white">
+            <svg width="15" viewBox="0 0 512 512"><path d="M511.2 387l-23.25 100.8c-3.266 14.25-15.79 24.22-30.46 24.22C205.2 512 0 306.8 0 54.5c0-14.66 9.969-27.2 24.22-30.45l100.8-23.25C139.7-2.602 154.7 5.018 160.8 18.92l46.52 108.5c5.438 12.78 1.77 27.67-8.98 36.45L144.5 207.1c33.98 69.22 90.26 125.5 159.5 159.5l44.08-53.8c8.688-10.78 23.69-14.51 36.47-8.975l108.5 46.51C506.1 357.2 514.6 372.4 511.2 387z"/></svg>
+                09036442093
+            </a>
+           <a href="https://wa.link/85v10z" style="max-width: 200px;" class="btn btn-primary d-block text-decoration-none text-white">
+            <i class="fa-brands fa-whatsapp text-success"></i>
+             open whatsapp
+            </a>
+       </div>
+       <ul class="text-dark flush p-0 border-0">
+           <li class="list-group-item title h5"> Contact us</li>
+           <li class="list-group-item">if you need an a room-mate or a room</li>
+           <li class="list-group-item"> if you would like to book this space</li>
+           <li class="list-group-item"> for more informartions about this space, like proximity to school</li>
+           <li class="list-group-item">If you would like to go inspect this space or any space on our website</li>
+           <li class="list-group-item"> To book our agent to take you around to see lodges of your choice</li>
+           <li class="list-group-item"> referrence a space to our agent through the space ID</li>
+           <li class="list-group-item"> About our policy</li>
+       </ul>
+       <p class="text-danger"> Note  only use the numbers from our site to contact our agents, don't fall for impersonators, as we would not be held liable for any loss</p>
  
     </footer>
-    <div class="video_tag mx-auto padded py-3">
+    <!-- <div class="video_tag mx-auto padded py-3">
         <h3 class="text-center text-success"> Video of the apartment</h3>
         <iframe width="100%" height="300" src="https://www.youtube.com/embed/5OJ_5aS-PdM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+    </div> -->
     <!-- ######## -->
         
 
 </section>
     
-<section id="agent_views py-5 mb-4" class="container">
-    <ul class="list-group ">
-        <li class="list-group-item"> NAME : EZEBUILO LODGE</li>
-        <li class="list-group-item"> Location : Royal kitchen junction</li>
-        <li class="list-group-item"> Caretaker : 0390895930</li>
-        <li class="list-group-item"> Caretaker Name : Victor</li>
-        <li class="list-group-item"> Original Price : 78k</li>
-    </ul>
+   <% if(user){ %>
+<section id="agent_views py-5 my-4" class="container">
+        <% if(user.agent.level){ %>
+            <% if(space.type == "room"){ %>
+            <div id="agent_page_carousel" class="carousel first-carousel slide mx-auto mt-2" data-bs-ride="carousel">
+                <div class="carousel-inner position-relative">
+                   <% imageForAgent.forEach((pic, index)=>{ %>
+                        <div class="carousel-item"  data-bs-toggle="modal"  aria-current="true" aria-label="Slide 1" data-bs-slide-to="<%= index %>">
+                            <img src="/images/<%=pic.filename%>" class="d-block img-fluid" alt="images of an apartment on in awka">
+                          </div>
+                   <% }) %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#agent_page_carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#agent_page_carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+              </div>
+            <ul class="list-group ">
+                <li class="list-group-item"> Lodge Name : <%= space.lodgeName %></li>
+                <li class="list-group-item"> Caretaker Name : <%= space.careTname %></li>
+                <li class="list-group-item"> Caretaker : <%= space.careTnum %></li>
+                <li class="list-group-item"> Available : <%= space.Available %></li>
+                <li class="list-group-item"> Location : <%= space.location %></li>
+            </ul>
+            <% } %>
+            <% if(space.type == "roomate"){%>
+                <ul class="list-group ">
+                    <li class="list-group-item"> NAME : <%= space.name %></li>
+                    <li class="list-group-item"> Lodge Name : <%= space.lodgeName %></li>
+                    <li class="list-group-item"> number : <%= space.number %></li>
+                    <li class="list-group-item"> Available : <%= space.Available %></li>
+                    <li class="list-group-item"> Location : <%= space.location %></li>
+                </ul>
+            <%}%>
+      <% } %>
 </section>
+    <%}%>
     <%- include("./partials/footer") -%>
 <!-- make modal pop up for images that are clicked on -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
+    // make the first pic active
+    document.querySelector("#details_page_carousel .carousel-item").classList.add("active")
+    document.querySelector("#agent_page_carousel .carousel-item").classList.add("active")
 
         var myModal = new bootstrap.Modal(document.getElementById('myModal'))
         document.querySelectorAll("#details_page_carousel .carousel-item").forEach(picture=>{

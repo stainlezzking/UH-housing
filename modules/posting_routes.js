@@ -69,6 +69,7 @@ router.post("/uploadRoomate",uploadMiddleWare("/uploadRoomate", [{name : "pictur
     .then((data)=>{
         // have a function that will unlink files everytime an error occurs
         req.body.imagesID = JSON.parse(JSON.stringify(data._id))
+        req.body.price = {initial : req.body.price, sub : null}
        return createSpace(req,res,"/uploadRoomate")
     })
     .catch(err=> {
@@ -79,7 +80,7 @@ router.post("/uploadRoomate",uploadMiddleWare("/uploadRoomate", [{name : "pictur
 
 })
 
-router.post("/uploadRoom",uploadMiddleWare("/uploadRoomate", 
+router.post("/uploadRoom",uploadMiddleWare("/uploadRoom", 
 [{name : "pictures", maxCount: 5},{name : "lodgeBuilding", maxCount: 3}]), 
 function(req,res){
     if(req.user.agent.level){
@@ -103,7 +104,6 @@ function(req,res){
             image.blob = fs.readFileSync(image.path)
              return image
          })
-         console.log("lodgeBuilding length is", lodgeBuilding.length)
         IMG.create({Picturepost : images.concat(lodgeBuilding), prefix})
         .then(data=>{
             req.body.imagesID = JSON.parse(JSON.stringify(data._id))  

@@ -11,7 +11,7 @@ const {Readable} = require("stream")
 
 
 // local modules
-const {USC, IMG, registerUser} = require("./modules/db")
+const {USC, IMG, registerUser, fetchSpace, SPC} = require("./modules/db")
 
 
 const app = express()
@@ -47,6 +47,7 @@ app.use(function(req,res,next){
         next()
     }
 })
+
 
 passport.serializeUser((user,done)=>{
     done(null,{id :user._id})
@@ -110,11 +111,11 @@ app.get("/roomateSpace", (req,res)=>{
 })
 
 // make /space something or redirect to somewhere maybe home page
-app.get("/space/:id", (req,res)=>{
+app.get("/space/:id", fetchSpace, (req,res)=>{
     res.render("details")
 })
 
-app.get("/login", (req,res)=>{
+app.get("/login",(req,res)=>{
     // if user is already logged in
     res.render("user_login")
 })
@@ -165,7 +166,6 @@ app.get("/images/:url", function(req,res){
 //     // so i'll make my buffer readable and then send back to img
 
     IMG.findOne({prefix : url[0]}, function(err,data){
-        console.log(req.params.url)
         if(data){
             let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
             if(pic){
@@ -188,7 +188,6 @@ app.get("/images/:url", function(req,res){
     
 })
 
-
 // posting routes 
 app.use(postingRoutes)
 
@@ -197,17 +196,12 @@ app.get("*", function(req,res){
 })
 
 
-// ADD BURGER ANIMATION ON ALL PAGE --
-// INDEX SPACE.TYPE
-// INDEX USER AS AGENT
+// GET CONTACT INFO FROM DB
+// FIX THE IMGS MODEL BUILDING NOT: SAVING
+// PAGGINATION
 // 404 PAGE
-// ADD ACTIVE ON NAVBAR -- 
-// POSTED ROUTES --
 // PRODUCT PAGE
 // FAVOURITE ROUTE
-// UPLOAD ROOMATE {USER} --
-// UPLOAD ROOM {AGENT} --
-// UPLOAD ROOMATE {AGENT} --
 // EDITING SOACE {AGENT}
 // DELETING POST {BOSS}
 // TEM HIDING POST {AGENT} 
