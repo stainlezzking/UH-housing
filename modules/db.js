@@ -137,17 +137,14 @@ const registerUser = async function(req,res,next){
         return res.redirect("/register")    
     }
 }
-// SPC.findById("xbshbk")
-// .then(data=> {
-//     console.log(data)
-// }).catch(err=> console.log(err))
+
 const fetchSpace = function(req,res,next){
     console.log(req.params.id)
     SPC.findById(req.params.id)
     .then((data)=>{
         console.log(data)
         if(data){
-           IMG.findOne({id : data.imagesID})
+           IMG.findById(data.imagesID)
             .then(image => {
                 res.locals.space = data
                 res.locals.images = image
@@ -162,6 +159,7 @@ const fetchSpace = function(req,res,next){
         res.send("an error occured")
     })
 }
+
 module.exports = {
     USC,
     registerUser,

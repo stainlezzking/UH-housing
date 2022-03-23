@@ -99,6 +99,9 @@ app.get("/", (req, res)=>{
     res.render("home")
 })
 app.get("/home", (req, res)=>{
+    SPC.find({}, function(err,data){
+        console.log(data.length)
+    })
     res.render("home")
 })
 
@@ -167,6 +170,7 @@ app.get("/images/:url", function(req,res){
 
     IMG.findOne({prefix : url[0]}, function(err,data){
         if(data){
+            console.log("the number of pics ",data.Picturepost.length)
             let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
             if(pic){
                 // only readable streams can be piped, and to the best 
@@ -195,10 +199,10 @@ app.get("*", function(req,res){
     res.send("redirect this later t0 404 page or the home page")
 })
 
-
 // GET CONTACT INFO FROM DB
 // FIX THE IMGS MODEL BUILDING NOT: SAVING
 // PAGGINATION
+// LAST LOGIN TO DB
 // 404 PAGE
 // PRODUCT PAGE
 // FAVOURITE ROUTE
