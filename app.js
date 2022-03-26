@@ -11,7 +11,7 @@ const {Readable} = require("stream")
 
 
 // local modules
-const {USC, IMG, registerUser, fetchSpace, SPC} = require("./modules/db")
+const {USC, IMG, registerUser, fetchSpace, fetchAllSpace, SPC} = require("./modules/db")
 
 
 const app = express()
@@ -98,18 +98,15 @@ function isAuthMiddleWare(req,res,next){
 app.get("/", (req, res)=>{
     res.render("home")
 })
-app.get("/home", (req, res)=>{
-    SPC.find({}, function(err,data){
-        console.log(data.length)
-    })
+app.get("/home",fetchAllSpace({},"price imagesID amenities settings sex type"),(req, res)=>{
     res.render("home")
 })
 
-app.get("/roomspace", (req,res)=>{
+app.get("/roomspace",fetchAllSpace({type:"room"},"price imagesID amenities settings sex type"),(req,res)=>{
     res.render("FindRoom")
 })
 
-app.get("/roomateSpace", (req,res)=>{
+app.get("/roomateSpace", fetchAllSpace({type:"roomate"},"price imagesID amenities settings sex type"),(req,res)=>{
     res.render("findRoomMate")
 })
 
@@ -160,7 +157,11 @@ app.get("/uploadRoomate",isAuthMiddleWare, (req,res)=>{
 })
 
 app.get("/uploadRoom",isAuthMiddleWare, (req,res)=>{
-    res.render("post-room")
+    if(req.user.agent.level){
+        res.render("post-room")
+    }else{
+        res.redirect("/profile")
+    }
 })
 
 app.get("/images/:url", function(req,res){
@@ -199,10 +200,11 @@ app.get("*", function(req,res){
     res.send("redirect this later t0 404 page or the home page")
 })
 
+// CONVERT ALL ES^CODE
 // GET CONTACT INFO FROM DB
-// FIX THE IMGS MODEL BUILDING NOT: SAVING
 // PAGGINATION
 // LAST LOGIN TO DB
+// MAKE PRODUCTS DISPLAY PAGE TWO LINES
 // 404 PAGE
 // PRODUCT PAGE
 // FAVOURITE ROUTE
@@ -211,6 +213,10 @@ app.get("*", function(req,res){
 // TEM HIDING POST {AGENT} 
 // MAKE USER AGENT {ADMIN}//later on
 
+function populate(){
+    
+    fs.readFile("./uploads/")
+}
 app.listen(3000, ()=>{
     console.log("server runnning on port 3000")
 })

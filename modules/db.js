@@ -160,11 +160,35 @@ const fetchSpace = function(req,res,next){
     })
 }
 
+// I learnt that forEach is not good with async fxns in them
+
+const fetchAllSpace = function(query, projections){
+    let arr = []
+    return function(req,res,next){
+    SPC.find(query, projections).sort({createdAt : -1})
+    .then(async function(data){
+        for await(let space of data){
+            const image = await IMG.findById(space.imagesID, "Picturepost.filename")
+            console.log(image.Picturepost[0])
+            arr.push(image.Picturepost[0])
+        }
+        res.locals.spaces = data
+        res.locals.urls = arr
+        console.log(arr)
+        next()
+    }).catch(err=>{
+        console.log("the erro that occured in /home route ",err)
+        return res.send("an error occured, please report this")
+    })
+}
+}
+
 module.exports = {
     USC,
     registerUser,
     IMG,
     SPC, 
-    fetchSpace
+    fetchSpace,
+    fetchAllSpace,
 }
 

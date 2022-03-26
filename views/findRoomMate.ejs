@@ -167,8 +167,26 @@
 <section class="rooms_group container-fluid my-3">
   <!-- change here for both room and roomate -->
   <h3 class="text-center p-5 fw-bold"> RoomMate </h3>
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+    <% for(let i = 0; i < spaces.length ; i++){ %>
+      <div class="col mb-2">
+        <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="/space/<%=spaces[i]._id %>">
+          <img src="/images/<%= urls[i].filename %>" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-baseline">
+              <%if(spaces[i].type == "room"){ %>
+                <small class="h4"> <%= spaces[i].settings %></small>
+              <% }%>
+             <% if(spaces[i].type == "roomate"){ %>
+                <small class="h5"> <%= spaces[i].sex.toUpperCase() %> ROOMATE</small>
+             <% } %>
+                <small class="h3 text-success"> <%= spaces[i].price.initial.toLocaleString('en-US') %></small>
+              </h5>
+            <p class="card-text"> <%= spaces[i].amenities.join(",") %></p>
+          </div>
+      </a>
+      </div>
+  <%}%>
         <div class="col mb-2">
           <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="https://google.com">
             <img src="../static/dont_upload/room1.jpg" class="card-img-top rounded-3" style="height: 200px;" alt="...">
