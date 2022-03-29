@@ -162,33 +162,130 @@ const fetchSpace = function(req,res,next){
 
 // I learnt that forEach is not good with async fxns in them
 
-const fetchAllSpace = function(query, projections){
+const fetchAllSpace = function(query, projections,page,limit){
     let arr = []
     return function(req,res,next){
-    SPC.find(query, projections).sort({createdAt : -1})
+    Boolean(res.locals.number) ? page = Number(res.locals.number) : null;
+    startIndex = page  * limit;
+    console.log("this is the start index", startIndex)
+    SPC.find(query, projections).sort({createdAt : -1}).skip(startIndex).limit(limit)
     .then(async function(data){
-        for await(let space of data){
-            const image = await IMG.findById(space.imagesID, "Picturepost.filename")
-            console.log(image.Picturepost[0])
-            arr.push(image.Picturepost[0])
+        if(data.length){
+            for await(let space of data){
+                const image = await IMG.findById(space.imagesID, "Picturepost.filename")
+                arr.push(image.Picturepost[0])
+            }
+            total = await SPC.countDocuments(query).then(data=> data)
+            .catch(err=> {
+                console.log("error counting documents (in fetchAllSPace) :" + err)
+            })
+            res.locals.spaces = data
+            res.locals.urls = arr
+            res.locals.paggination = pagination(total, page, limit)
+            next();
+        }else{
+            res.send("couldn't locate page...")
         }
-        res.locals.spaces = data
-        res.locals.urls = arr
-        console.log(arr)
-        next()
+
     }).catch(err=>{
         console.log("the erro that occured in /home route ",err)
         return res.send("an error occured, please report this")
     })
 }
 }
+const pagination = function(total, page, limit){
+    let arr = [];
+        !page ? prev = false :  prev = true ;
+        let pages = (total/limit)
+        console.log(pages,page);
+        // because pages starts from zero
+        Math.ceil(total/limit) > page+1 ? next = true : next = false;
+        for(i = page -5; i <= page +5; i++){
+            if(i >= 0 && i < Math.ceil(total/limit)) arr.push(i);
+        }
+        startIndex = page * limit;
+        return {
+            startIndex,
+            next,
+            prev,
+            pagg : arr,
+            page
+        }
 
+}
+
+const checkParams = function(req,res, next){
+    //  plus one so that page zero can pass through
+    if(Number(req.params.number) +1){
+        res.locals.number = req.params.number
+       return next()
+    }
+    res.send("404, your page could not be located")
+}
+//  const fs = require("fs")
+//  const crypto = require("crypto")
+// const postSpaces =  function(){
+//     const set = ["FEMALE", "MALE"]
+//     let prefix = crypto.randomBytes(12).toString("hex") ;
+//     const one = { 
+//         blob : fs.readFileSync(__dirname + "/../uploads/one.jpg"),
+//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
+//     }
+//     const four = { 
+//         blob : fs.readFileSync(__dirname + "/../uploads/four.jpg"),
+//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
+//     } 
+//     const five = { 
+//         blob : fs.readFileSync(__dirname + "/../uploads/five.jpg"),
+//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
+//     } 
+//     IMG.create({
+//         prefix,
+//         Picturepost : [one,four,five]
+//     }).then(data=>{
+//         let p =  Math.round(Math.random()*1000000) - 300000
+//         space = {
+//             poster : "stainlezzking",
+//             type : "roomate",
+//             lodgeName : "HIS GLORY",
+//             imagesID : JSON.parse(JSON.stringify(data._id)),
+//             junction : "second market",
+//             location : "from school gate take a bike going down to....",
+//             amenities : ["Prepaid-Meter", "toilet & bathroom", "running water", "well", "corridor", "kitchen"],
+//             sex : `${set[Math.round(Math.random())]}`,
+//             description : "Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.",
+//             name : "ezeOgb0h",
+//             number : 0801900072782,
+//             price : {
+//                 initial: p,
+//                 sub : null
+//             }
+//         }
+//         SPC.create(space)
+//         .then(data=> console.log("one space added"))
+//         .catch(err=> console.log("an error occured ", err))
+//     })
+//     .catch(err=> console.log("an error occured ", err))
+// }
+
+// for(i = 0; i < 35; i++ ){
+//     postSpaces()
+//     if(i == 49){
+//         console.log("this upload is complete")
+//     }
+// }
+// SPC.findOne({}, function(err,res){ console.log(res)})
+// IMG.findOne({prefix : "efe6d0b9bedfe1fbaf737ae1"}, {"Picturepost.blob": 0})
+// .then(data=> console.log(data))
+// IMG.find({},{"Picturepost.blob": 0}, function(err,res){console.log(res)})
+// SPC.countDocuments(function(err,res){console.log(res)})
 module.exports = {
     USC,
     registerUser,
     IMG,
     SPC, 
+    checkParams,
     fetchSpace,
-    fetchAllSpace,
+    fetchAllSpace, 
 }
 

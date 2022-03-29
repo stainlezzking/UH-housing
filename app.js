@@ -4,15 +4,14 @@ const passport = require("passport")
 const session = require("express-session")
 const flash = require("express-flash")
 const localStrategy = require("passport-local").Strategy
-const postingRoutes = require("./modules/posting_routes")
 const fs = require("fs")
 const {Readable} = require("stream")
 
 
 
 // local modules
-const {USC, IMG, registerUser, fetchSpace, fetchAllSpace, SPC} = require("./modules/db")
-
+const postingRoutes = require("./modules/posting_routes")
+const {USC, IMG, registerUser, fetchSpace, fetchAllSpace,checkParams, SPC} = require("./modules/db")
 
 const app = express()
 app.use("/static",express.static("static"))
@@ -95,18 +94,18 @@ function isAuthMiddleWare(req,res,next){
 }
 
 
-app.get("/", (req, res)=>{
+app.get("/",fetchAllSpace({},"price imagesID amenities settings sex type", 0,20),(req, res)=>{
     res.render("home")
 })
-app.get("/home",fetchAllSpace({},"price imagesID amenities settings sex type"),(req, res)=>{
+app.get("/home",fetchAllSpace({},"price imagesID amenities settings sex type", 0, 20),(req, res)=>{
     res.render("home")
 })
 
-app.get("/roomspace",fetchAllSpace({type:"room"},"price imagesID amenities settings sex type"),(req,res)=>{
+app.get("/roomspace",fetchAllSpace({type:"room"},"price imagesID amenities settings sex type", 0, 20),(req,res)=>{
     res.render("FindRoom")
 })
 
-app.get("/roomateSpace", fetchAllSpace({type:"roomate"},"price imagesID amenities settings sex type"),(req,res)=>{
+app.get("/roomateSpace", fetchAllSpace({type:"roomate"},"price imagesID amenities settings sex type", 0 ,20),(req,res)=>{
     res.render("findRoomMate")
 })
 
@@ -115,6 +114,11 @@ app.get("/space/:id", fetchSpace, (req,res)=>{
     res.render("details")
 })
 
+app.get("/page/:number", checkParams,
+fetchAllSpace({},"price imagesID amenities settings sex type",null,20 ),
+(req,res)=>{
+    res.render("home")
+})
 app.get("/login",(req,res)=>{
     // if user is already logged in
     res.render("user_login")
@@ -171,7 +175,6 @@ app.get("/images/:url", function(req,res){
 
     IMG.findOne({prefix : url[0]}, function(err,data){
         if(data){
-            console.log("the number of pics ",data.Picturepost.length)
             let pic = data.Picturepost.filter(pict => pict.filename == req.params.url)[0]
             if(pic){
                 // only readable streams can be piped, and to the best 
@@ -179,7 +182,7 @@ app.get("/images/:url", function(req,res){
                 // to image tags aside passing in blobs into the tag...
                 Readable.from(pic.blob).pipe(res)
             }else{
-                res.send(404,`
+                res.status(404).send(`
                     <h2>  404, IMAGE NOT FOUND </h2>  
                     `)
             }
@@ -213,10 +216,6 @@ app.get("*", function(req,res){
 // TEM HIDING POST {AGENT} 
 // MAKE USER AGENT {ADMIN}//later on
 
-function populate(){
-    
-    fs.readFile("./uploads/")
-}
 app.listen(3000, ()=>{
     console.log("server runnning on port 3000")
 })

@@ -3,7 +3,6 @@ const multer = require("multer")
 const path = require("path")
 
 function fileFilter (req, file, cb) {
-  console.log(file)
     if(!file.mimetype.includes('image')){
         return  cb(new Error('file must be an image'), false)
       }
