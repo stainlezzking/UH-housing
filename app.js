@@ -109,6 +109,11 @@ app.get("/roomateSpace", fetchAllSpace({type:"roomate"},"price imagesID amenitie
     res.render("findRoomMate")
 })
 
+app.get("/roomatespace/page/:number", checkParams,
+fetchAllSpace({type : "roomate"},"price imagesID amenities settings sex type",null,20 ),
+(req,res)=>{
+    res.render("findRoomMate")
+})
 // make /space something or redirect to somewhere maybe home page
 app.get("/space/:id", fetchSpace, (req,res)=>{
     res.render("details")
