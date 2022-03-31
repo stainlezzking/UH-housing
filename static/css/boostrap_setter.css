@@ -112,15 +112,26 @@
   .select_tag_cover input[type=checkbox] ~ div i:nth-child(2){
       display: none;
   }
-
+  .select_tag_cover input[type=radio] ~ div i:nth-child(2){
+    display: none;
+}
   .select_tag_cover input[type=checkbox]:checked ~ div {
+    background-color: #50bcf2;
+  }
+  .select_tag_cover input[type=radio]:checked ~ div {
     background-color: #50bcf2;
   }
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(1) {
     display: none;
 }
+.select_tag_cover input[type=radio]:checked ~ div i:nth-child(1) {
+  display: none;
+}
   .select_tag_cover input[type=checkbox]:checked ~ div i:nth-child(2) {
     display: inline;
+}
+.select_tag_cover input[type=radio]:checked ~ div i:nth-child(2) {
+  display: inline;
 }
   
 /* CARD SECTION */

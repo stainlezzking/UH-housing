@@ -9,12 +9,12 @@ const crypto = require("crypto")
 
 
 router.use(express.urlencoded({extended : true}))
-router.use(function(req,res,next){
+const isAuth = function(req,res,next){
     if(req.isAuthenticated()){
         return next()
     }
     res.redirect("/login")
-})
+}
 router.use(flash())
 
 const createSpace = function(req,res, route){
@@ -31,7 +31,7 @@ const createSpace = function(req,res, route){
     })
 }
 
-router.post("/changeDetails", function(req,res){
+router.post("/changeDetails",isAuth, function(req,res){
     console.log(req.body)
     const {number, password} = req.body
     console.log(number,password)
@@ -50,7 +50,7 @@ router.post("/changeDetails", function(req,res){
         return  res.redirect("/profile")
     }
 })
-router.post("/uploadRoomate",uploadMiddleWare("/uploadRoomate", [{name : "pictures",maxCount: 5}]), async function(req,res){
+router.post("/uploadRoomate",isAuth,uploadMiddleWare("/uploadRoomate", [{name : "pictures",maxCount: 5}]), async function(req,res){
   //   req.body contains [Object : null prototype ]
   let prefix = crypto.randomBytes(12).toString("hex") ;
     req.body = JSON.parse(JSON.stringify(req.body))
@@ -80,7 +80,7 @@ router.post("/uploadRoomate",uploadMiddleWare("/uploadRoomate", [{name : "pictur
 
 })
 
-router.post("/uploadRoom",uploadMiddleWare("/uploadRoom", 
+router.post("/uploadRoom",isAuth,uploadMiddleWare("/uploadRoom", 
 [{name : "pictures", maxCount: 5},{name : "lodgeBuilding", maxCount: 3}]), 
 function(req,res){
     if(req.user.agent.level){

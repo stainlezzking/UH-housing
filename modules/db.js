@@ -139,10 +139,8 @@ const registerUser = async function(req,res,next){
 }
 
 const fetchSpace = function(req,res,next){
-    console.log(req.params.id)
     SPC.findById(req.params.id)
     .then((data)=>{
-        console.log(data)
         if(data){
            IMG.findById(data.imagesID)
             .then(image => {
@@ -167,7 +165,6 @@ const fetchAllSpace = function(query, projections,page,limit){
     return function(req,res,next){
     Boolean(res.locals.number) ? page = Number(res.locals.number) : null;
     startIndex = page  * limit;
-    console.log("this is the start index", startIndex)
     SPC.find(query, projections).sort({createdAt : -1}).skip(startIndex).limit(limit)
     .then(async function(data){
         if(data.length){
@@ -197,8 +194,7 @@ const pagination = function(total, page, limit){
     let arr = [];
         !page ? prev = false :  prev = true ;
         let pages = (total/limit)
-        console.log(pages,page);
-        // because pages starts from zero
+        // because page starts from zero
         Math.ceil(total/limit) > page+1 ? next = true : next = false;
         for(i = page -5; i <= page +5; i++){
             if(i >= 0 && i < Math.ceil(total/limit)) arr.push(i);
@@ -221,6 +217,40 @@ const checkParams = function(req,res, next){
        return next()
     }
     res.send("404, your page could not be located")
+}
+const concatObjects = (...sources) => {
+    const target = {};
+    sources.forEach(el => {
+       Object.keys(el).forEach(key => target[key] = el[key]);
+    });
+    return target;
+ }
+const filterMidd = function(req,res,next){
+    // what if page is not a number
+    let arr = []
+    let query = {};
+    let {price, amenities, type, page } = req.query
+    price ? query.price = {"price.initial" :{$gt : Number(price)}} : null;
+    type ? query.type = {type} : null;
+    amenities ? query.amenities = {amenities : {$all : amenities}}: null;
+    Number(page) ? null  : page = 0;
+    query = concatObjects(...Object.values(query))
+    SPC.find(query).sort({"price.initial" : 1}).limit(40)
+    .then(async function(data) {
+        for await(let space of data){
+            const image = await IMG.findById(space.imagesID, "Picturepost.filename")
+            arr.push(image.Picturepost[0])
+        }
+        res.locals.spaces = data
+        res.locals.urls = arr
+        res.locals.results = req.query
+        return next();
+    })
+    .catch(err=>{
+        console.log(err, "error occured in filterMidd function db page")
+       return res.send("an error occured trying to filter your docs, please report this problem")
+    })
+    // query = concatObjects()
 }
 //  const fs = require("fs")
 //  const crypto = require("crypto")
@@ -274,11 +304,7 @@ const checkParams = function(req,res, next){
 //         console.log("this upload is complete")
 //     }
 // }
-// SPC.findOne({}, function(err,res){ console.log(res)})
-// IMG.findOne({prefix : "efe6d0b9bedfe1fbaf737ae1"}, {"Picturepost.blob": 0})
-// .then(data=> console.log(data))
-// IMG.find({},{"Picturepost.blob": 0}, function(err,res){console.log(res)})
-// SPC.countDocuments(function(err,res){console.log(res)})
+
 module.exports = {
     USC,
     registerUser,
@@ -287,5 +313,6 @@ module.exports = {
     checkParams,
     fetchSpace,
     fetchAllSpace, 
+    filterMidd
 }
 

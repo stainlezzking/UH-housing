@@ -11,7 +11,7 @@ const {Readable} = require("stream")
 
 // local modules
 const postingRoutes = require("./modules/posting_routes")
-const {USC, IMG, registerUser, fetchSpace, fetchAllSpace,checkParams, SPC} = require("./modules/db")
+const {USC, IMG, registerUser, fetchSpace, fetchAllSpace,checkParams, SPC, filterMidd} = require("./modules/db")
 
 const app = express()
 app.use("/static",express.static("static"))
@@ -113,11 +113,19 @@ app.get("/roomateSpace", fetchAllSpace({type:"roomate"},"price imagesID amenitie
 app.get("/space/:id", fetchSpace, (req,res)=>{
     res.render("details")
 })
+// home search form
+app.get("/search/", function(req,res){  
+    res.redirect("/space/"+req.query.space)
+})
 
 app.get("/page/:number", checkParams,
 fetchAllSpace({},"price imagesID amenities settings sex type",null,20 ),
 (req,res)=>{
     res.render("home")
+})
+
+app.get("/filter",filterMidd, function(req,res){
+    res.render("filteredPage")
 })
 app.get("/login",(req,res)=>{
     // if user is already logged in
@@ -170,8 +178,8 @@ app.get("/uploadRoom",isAuthMiddleWare, (req,res)=>{
 
 app.get("/images/:url", function(req,res){
     let url = req.params.url.split("-")
-//     //  so only readStreams can be sent back to image tags
-//     // so i'll make my buffer readable and then send back to img
+     //  so only readStreams can be sent back to image tags
+     // so i'll make my buffer readable and then send back to img
 
     IMG.findOne({prefix : url[0]}, function(err,data){
         if(data){
@@ -193,19 +201,18 @@ app.get("/images/:url", function(req,res){
         }
 
     })
-    
 })
 
 // posting routes 
-app.use(postingRoutes)
+app.use("/",postingRoutes)
 
 app.get("*", function(req,res){
     res.send("redirect this later t0 404 page or the home page")
 })
 
 // CONVERT ALL ES^CODE
+// set session secretkey to env
 // GET CONTACT INFO FROM DB
-// PAGGINATION
 // LAST LOGIN TO DB
 // MAKE PRODUCTS DISPLAY PAGE TWO LINES
 // 404 PAGE

@@ -50,28 +50,7 @@
 
   
   <!-- Search Modal -->
-  <div class="modal fade " id="searchModal" tabindex="-1" aria-labelledby="pop up to search rooms" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Search Room </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Search</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="search only by roomID">
-                  </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </div>`
-  </div>
+  <%- include("./partials/searchSpace.ejs") -%>
   <!-- ######### -->
   <!-- Filter Modal -->
   <div class="modal fade " id="filterModal" tabindex="-1" aria-labelledby="pop up to filter rooms search" aria-hidden="true">

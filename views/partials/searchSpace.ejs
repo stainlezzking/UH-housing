@@ -1,0 +1,49 @@
+ <!-- Search Modal -->
+ <style>
+    .error {
+      opacity: 0;
+      transition: opacity .4s ease-in-out;
+    }
+    .error.show{
+      opacity: 1;
+    }
+  </style>
+  <div class="modal fade " id="searchModal" tabindex="-1" aria-labelledby="pop up to search rooms" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Search Space </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body md1">
+          <div class="error text-center text-info">
+            your input should not be empty
+          </div>
+            <form method="GET" action="/search">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Search</label>
+                    <input type="text" name="space" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="search only by Space ID">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="reset" class="btn btn-info text-white" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    //  this will reset the forms input if cancelled
+    var form = document.querySelector('#searchModal form')
+    form.addEventListener("submit", function(event){
+    var input = document.querySelector('#searchModal form input')
+      event.preventDefault()
+      if(input.value.trim()) return form.submit()
+      document.querySelector(".md1 .error").classList.add("show")
+      setTimeout(()=>{
+      document.querySelector(".md1 .error").classList.remove("show")
+      },2000)
+    })
+ </script>
+  <!-- ######### -->
