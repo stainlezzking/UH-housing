@@ -114,6 +114,13 @@ fetchAllSpace({type : "roomate"},"price imagesID amenities settings sex type",nu
 (req,res)=>{
     res.render("findRoomMate")
 })
+
+app.get("/roomspace/page/:number", checkParams,
+fetchAllSpace({type : "room"},"price imagesID amenities settings sex type",null,20 ),
+(req,res)=>{
+    res.render("findRoom")
+})
+
 // make /space something or redirect to somewhere maybe home page
 app.get("/space/:id", fetchSpace, (req,res)=>{
     res.render("details")
