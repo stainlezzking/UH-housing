@@ -73,6 +73,8 @@ passport.use(new localStrategy(
                 // i dont know why but the tutorial used try, catch maybe its to handle the error
                 try{
                     if(data.password === password){
+                        USC.updateOne({username : data.username}, {$set : {lastLoggedIn : Date.now()}})
+                        .catch(err=> console.log("couldn't update last loggedin", err))
                         return done(null,data)
                     }else{
                         return done(null, false, {message : "password incorrect, try again"})
@@ -226,11 +228,9 @@ app.get("*", function(req,res){
 // set session secretkey to env
 // GET CONTACT INFO FROM DB
 // LAST LOGIN TO DB
-// MAKE PRODUCTS DISPLAY PAGE TWO LINES
 // 404 PAGE
-// PRODUCT PAGE
 // FAVOURITE ROUTE
-// EDITING SOACE {AGENT}
+// EDITING SPACE {AGENT}
 // DELETING POST {BOSS}
 // TEM HIDING POST {AGENT} 
 // MAKE USER AGENT {ADMIN}//later on
