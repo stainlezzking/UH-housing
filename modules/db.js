@@ -86,11 +86,7 @@ const user = new mongoose.Schema({
         }
         
     },
-    spaces : [
-        {
-            id : String,
-        }
-    ],
+    lastLoggedIn : {type : Date, default : Date.now},
     favouriteSpaces : [
         {
             id : String,
@@ -118,7 +114,7 @@ const registerUser = async function(req,res,next){
           if(!newUser[props]){
             throw "Make sure all inputs are filled"
           }
-        }
+        }req
         // check if user exists
          const usn =  await USC.findOne({username : req.body.username})
          const em = await USC.findOne({email : req.body.email})
@@ -159,12 +155,8 @@ const fetchSpace = function(req,res,next){
 }
 
 // I learnt that forEach is not good with async fxns in them
-
-const fetchAllSpace = function(query, projections,page,limit){
+const findSpace_Images = function(res,query, projections,page,limit, next){
     let arr = []
-    return function(req,res,next){
-    Boolean(res.locals.number) ? page = Number(res.locals.number) : null;
-    startIndex = page  * limit;
     SPC.find(query, projections).sort({createdAt : -1}).skip(startIndex).limit(limit)
     .then(async function(data){
         if(data.length){
@@ -179,16 +171,29 @@ const fetchAllSpace = function(query, projections,page,limit){
             res.locals.spaces = data
             res.locals.urls = arr
             res.locals.paggination = pagination(total, page, limit)
-            next();
+           return next();
         }else{
             res.send("couldn't locate page...")
         }
-
     }).catch(err=>{
         console.log("the erro that occured in /home route ",err)
         return res.send("an error occured, please report this")
     })
 }
+const fetchAllSpace = function(query, projections,page,limit){
+    return function(req,res,next){
+    Boolean(res.locals.number) ? page = Number(res.locals.number) : null;
+    startIndex = page  * limit;
+    return findSpace_Images(res,query, projections,page,limit,next)
+}
+}
+const getPosted = function(req,res,next){
+    limit = 20
+    projections = "price imagesID amenities settings sex type"
+    Object.keys(req.query).length ? page = Number(req.query.page): page = 0 ;
+    startIndex = page  * limit;
+    console.log(startIndex, page, limit)
+    return findSpace_Images(res, {poster: req.user.username},projections, page,limit, next )
 }
 const pagination = function(total, page, limit){
     let arr = [];
@@ -252,58 +257,6 @@ const filterMidd = function(req,res,next){
     })
     // query = concatObjects()
 }
-//  const fs = require("fs")
-//  const crypto = require("crypto")
-// const postSpaces =  function(){
-//     const set = ["FEMALE", "MALE"]
-//     let prefix = crypto.randomBytes(12).toString("hex") ;
-//     const one = { 
-//         blob : fs.readFileSync(__dirname + "/../uploads/one.jpg"),
-//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
-//     }
-//     const four = { 
-//         blob : fs.readFileSync(__dirname + "/../uploads/four.jpg"),
-//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
-//     } 
-//     const five = { 
-//         blob : fs.readFileSync(__dirname + "/../uploads/five.jpg"),
-//         filename : prefix + '-'+ Math.round(Math.random() * 1E9) + '-' + Date.now() + "- 623897c8574cb2abbe782f11 - .jpg",
-//     } 
-//     IMG.create({
-//         prefix,
-//         Picturepost : [one,four,five]
-//     }).then(data=>{
-//         let p =  Math.round(Math.random()*1000000) - 300000
-//         space = {
-//             poster : "stainlezzking",
-//             type : "roomate",
-//             lodgeName : "HIS GLORY",
-//             imagesID : JSON.parse(JSON.stringify(data._id)),
-//             junction : "second market",
-//             location : "from school gate take a bike going down to....",
-//             amenities : ["Prepaid-Meter", "toilet & bathroom", "running water", "well", "corridor", "kitchen"],
-//             sex : `${set[Math.round(Math.random())]}`,
-//             description : "Designed and built with all the love in the world by the Bootstrap team with the help of our contributors.",
-//             name : "ezeOgb0h",
-//             number : 0801900072782,
-//             price : {
-//                 initial: p,
-//                 sub : null
-//             }
-//         }
-//         SPC.create(space)
-//         .then(data=> console.log("one space added"))
-//         .catch(err=> console.log("an error occured ", err))
-//     })
-//     .catch(err=> console.log("an error occured ", err))
-// }
-
-// for(i = 0; i < 35; i++ ){
-//     postSpaces()
-//     if(i == 49){
-//         console.log("this upload is complete")
-//     }
-// }
 
 module.exports = {
     USC,
@@ -313,6 +266,7 @@ module.exports = {
     checkParams,
     fetchSpace,
     fetchAllSpace, 
-    filterMidd
+    filterMidd,
+    getPosted
 }
 

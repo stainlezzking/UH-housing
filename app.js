@@ -11,7 +11,7 @@ const {Readable} = require("stream")
 
 // local modules
 const postingRoutes = require("./modules/posting_routes")
-const {USC, IMG, registerUser, fetchSpace, fetchAllSpace,checkParams, SPC, filterMidd} = require("./modules/db")
+const {USC, IMG, registerUser,getPosted, fetchSpace, fetchAllSpace,checkParams, SPC, filterMidd} = require("./modules/db")
 
 const app = express()
 app.use("/static",express.static("static"))
@@ -132,6 +132,12 @@ app.get("/search/", function(req,res){
     res.redirect("/space/"+req.query.space)
 })
 
+app.get("/spaces/posted", isAuthMiddleWare,
+getPosted,
+function(req,res){
+   res.render("posted")
+})
+
 app.get("/page/:number", checkParams,
 fetchAllSpace({},"price imagesID amenities settings sex type",null,20 ),
 (req,res)=>{
@@ -227,7 +233,6 @@ app.get("*", function(req,res){
 // CONVERT ALL ES^CODE
 // set session secretkey to env
 // GET CONTACT INFO FROM DB
-// LAST LOGIN TO DB
 // 404 PAGE
 // FAVOURITE ROUTE
 // EDITING SPACE {AGENT}

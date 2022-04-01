@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unizik Housing - Let's Find you a Home in Awka</title>
+    <link rel="shortcut icon" href="static/images/favicon.png" type="image/x-icon">
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/c8fd5239b9.js" crossorigin="anonymous"></script>
+     <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&display=swap" rel="stylesheet">
+    <!-- ######## -->
+    <!-- meta tags -->
+
+    <meta name="author" content="AZUKA CHUKWUEBUKA STANLEY" />
+    <meta name="keywords" content="Lodge in Awka, rent, unizik housing, unizik, lodges, unizik roomate, nnamdi azikiwe university">
+    <meta name="description" content="Find the best lodge or roomate for your kids in unizik or anyone one moving into awka, go scroll through our site and pick the house that best fit your needs">    
+    <meta name="twitter" content="stainlezzking">
+    <!--  -->
+        <!-- bootstrap  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/boostrap_setter.css">
+    <!-- ######### -->
+</head>
+<body>
+  <%- include('./partials/navbar.ejs') -%>
+
+<!-- ROOMS SECTION -->
+<section class="rooms_group container-fluid my-3">
+  <h3 class="text-center p-5 fw-bold"> Spaces by <%= user.username %> </h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+      <% for(let i = 0; i < spaces.length ; i++){ %>
+        <div class="col mb-2">
+          <a class="card h-100 shadow d-block text-decoration-none text-dark position-relative" href="/space/<%=spaces[i]._id %>">
+            <img src="/images/<%= urls[i].filename %>" class="card-img-top rounded-3" style="height: 200px;" alt="...">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-baseline">
+                <%if(spaces[i].type == "room"){ %>
+                  <small class="h4"> <%= spaces[i].settings %></small>
+                <% }%>
+               <% if(spaces[i].type == "roomate"){ %>
+                  <small class="h5"> <%= spaces[i].sex.toUpperCase() %> ROOMATE</small>
+               <% } %>
+                  <small class="h3 text-success"> 
+                    <i class="fa-solid fa-naira-sign"></i>
+                    <%= spaces[i].price.initial.toLocaleString('en-US') %>
+                  </small>
+                </h5>
+              <p class="card-text"> <%= spaces[i].amenities.join(",") %></p>
+            </div>
+        </a>
+        </div>
+    <%}%>
+</section>
+<nav aria-label="Page navigation example my-3">
+    <ul class="pagination justify-content-center">
+     <% if(paggination.prev){ %>
+        <li class="page-item"><a class="page-link" href="/spaces/posted/?page=<%= paggination.page-1 %>">Previous</a></li>
+     <% } %>
+       <% paggination.pagg.forEach(index=>{ %>
+       <% if(index ==  paggination.page){ %>
+          <li class="page-item"><a class="page-link bg-primary text-white" href="/spaces/posted/?page=<%=index %>"><%= index+1 %></a></li>
+      <%  }else{ %>
+          <li class="page-item"><a class="page-link" href="/spaces/posted/?page=<%=index %>"><%= index+1 %></a></li>
+       <% } %>
+       <% }) %>
+     <% if(paggination.next){ %>
+        <li class="page-item"><a class="page-link" href="/spaces/posted/?page=<%= paggination.page + 1 %>">Next</a></li>
+    <%}%>
+    </ul>
+  </nav>
+<%- include('./partials/footer.ejs') -%>
+
+      <!-- Bootstrap script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
