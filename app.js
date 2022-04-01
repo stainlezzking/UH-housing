@@ -6,7 +6,7 @@ const flash = require("express-flash")
 const localStrategy = require("passport-local").Strategy
 const fs = require("fs")
 const {Readable} = require("stream")
-
+require("dotenv").config()
 
 
 // local modules
@@ -23,7 +23,7 @@ app.use(flash())
 
 // session
 app.use(session({
-    secret : "any fucking string",
+    secret : process.env.SESSION_KEY,
     resave : false,
     saveUninitialized : false,
     cookie : {
@@ -232,7 +232,6 @@ app.get("*", function(req,res){
 
 // CONVERT ALL ES^CODE
 // set session secretkey to env
-// GET CONTACT INFO FROM DB
 // 404 PAGE
 // FAVOURITE ROUTE
 // EDITING SPACE {AGENT}
